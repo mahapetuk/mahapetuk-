@@ -22,44 +22,30 @@
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     body { font-family: 'Poppins', 'Hind Siliguri', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.5; padding-bottom: 95px; }
     
-    .announcement { background: linear-gradient(90deg, #b91c1c, #d97706); color: white; text-align: center; padding: 7px 12px; font-size: 13px; font-weight: 600; }
+    .announcement { background: linear-gradient(90deg, #b91c1c, #d97706); color: white; text-align: center; padding: 8px 12px; font-size: 13px; font-weight: 600; }
 
-    /* টপ ব্যানার ডিজাইন */
-    .top-banner-container {
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 10px 10px 0;
-    }
-    .top-banner-img {
-      width: 100%;
-      height: auto;
-      max-height: 380px;
-      object-fit: cover;
-      border-radius: 16px;
-      display: block;
-      border: 1px solid rgba(245, 158, 11, 0.3);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    }
+    /* টপ বড় ব্যানার এরিয়া */
+    .top-banner-container { width: 100%; max-width: 900px; margin: 0 auto; padding: 12px 12px 0; }
+    .top-banner-img { width: 100%; height: auto; min-height: 180px; max-height: 380px; object-fit: cover; border-radius: 14px; display: block; border: 1px solid rgba(245, 158, 11, 0.3); background: #232326; }
 
-    .hero { background: radial-gradient(circle at top, #2d1810 0%, #121212 75%); padding: 30px 20px 25px; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
-    .badge-tagline { display: inline-block; background: rgba(245, 158, 11, 0.15); color: var(--primary); border: 1px solid rgba(245, 158, 11, 0.3); padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 12px; }
-    .hero-title { font-size: 38px; font-weight: 800; color: #fff; margin-bottom: 5px; }
-    .hero-sub { font-size: 18px; color: var(--primary); font-weight: 700; margin-bottom: 8px; }
-    .hero-desc { font-size: 14px; color: var(--text-muted); max-width: 500px; margin: 0 auto 18px; }
+    .hero { background: radial-gradient(circle at top, #2d1810 0%, #121212 75%); padding: 25px 20px 20px; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+    .badge-tagline { display: inline-block; background: rgba(245, 158, 11, 0.15); color: var(--primary); border: 1px solid rgba(245, 158, 11, 0.3); padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+    .hero-title { font-size: 36px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+    .hero-sub { font-size: 17px; color: var(--primary); font-weight: 700; margin-bottom: 6px; }
+    .hero-desc { font-size: 14px; color: var(--text-muted); max-width: 500px; margin: 0 auto 16px; }
     .location-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1); padding: 6px 14px; border-radius: 25px; font-size: 13px; color: #e4e4e7; text-decoration: none; }
     .location-pill i { color: var(--accent); }
-    .hero-actions { display: flex; justify-content: center; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+    .hero-actions { display: flex; justify-content: center; gap: 12px; margin-top: 18px; flex-wrap: wrap; }
     .btn-action { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 10px; font-size: 14px; font-weight: 700; text-decoration: none; color: white; }
     .btn-call { background: var(--phone); }
     .btn-wa { background: var(--whatsapp); }
 
     .container { max-width: 900px; margin: 0 auto; padding: 20px 15px; }
-    .menu-section { margin-top: 30px; }
+    .menu-section { margin-top: 32px; }
     .section-title { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; color: var(--primary); margin-bottom: 16px; border-bottom: 2px solid rgba(245, 158, 11, 0.25); padding-bottom: 8px; }
     .food-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
     .food-card { background: var(--card-bg); border-radius: 14px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.06); display: flex; flex-direction: column; position: relative; }
-    .food-img-wrap { position: relative; width: 100%; height: 175px; background: #232326; overflow: hidden; }
+    .food-img-wrap { position: relative; width: 100%; height: 180px; background: #232326; overflow: hidden; }
     .food-img { width: 100%; height: 100%; object-fit: cover; }
     .stock-badge { position: absolute; top: 10px; right: 10px; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; }
     .badge-in { background: rgba(34, 197, 94, 0.9); color: #fff; }
@@ -68,8 +54,8 @@
     .food-info { padding: 14px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
     .name-bn { font-size: 17px; font-weight: 700; color: #ffffff; margin-bottom: 2px; }
     .name-en { font-size: 13px; color: var(--text-muted); }
-    .food-bottom { display: flex; align-items: center; justify-content: space-between; border-top: 1px dashed rgba(255, 255, 255, 0.1); padding-top: 10px; margin-top: 8px; }
-    .food-price { font-size: 18px; font-weight: 800; color: var(--primary); }
+    .food-bottom { display: flex; align-items: center; justify-content: space-between; border-top: 1px dashed rgba(255, 255, 255, 0.1); padding-top: 10px; margin-top: 10px; }
+    .food-price { font-size: 17px; font-weight: 800; color: var(--primary); }
     .order-item-btn { background: rgba(37, 211, 102, 0.15); color: var(--whatsapp); border: 1px solid rgba(37, 211, 102, 0.3); padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
     .order-disabled { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); border-color: transparent; pointer-events: none; }
     
@@ -98,9 +84,9 @@
 
   <div class="announcement">🔥 গরম গরম মুচমুচে ফাস্ট ফুড • সেরা কোয়ালিটি ও আসল স্বাদ!</div>
 
-  <!-- একদম টপে আপনার দোকানের ব্যানার -->
+  <!-- টপ ব্যানার কনটেইনার -->
   <div class="top-banner-container">
-    <img src="banner.jpg" alt="মহা পেটুক ব্যানার" class="top-banner-img">
+    <img id="mainBannerImg" src="" alt="মহা পেটুক ব্যানার" class="top-banner-img">
   </div>
 
   <header class="hero">
@@ -140,7 +126,7 @@
   <div id="adminModal" class="admin-modal">
     <div class="admin-content">
       <div class="admin-header">
-        <h3 style="color: var(--primary);">খাবার ও দাম স্টক কন্ট্রোল</h3>
+        <h3 style="color: var(--primary);">১৬টি আইটেম ও স্টক কন্ট্রোল</h3>
         <button onclick="closeAdmin()" style="background: none; border: none; color: #fff; font-size: 20px; cursor: pointer;">✕</button>
       </div>
       <div id="adminList"></div>
@@ -154,31 +140,172 @@
   </div>
 
   <script>
+    /* ==========================================================================
+       ১. আপনার দোকানের টপ ব্যানার ছবি (এখানে আপনার ছবির নাম বা লিঙ্ক বসান)
+       ========================================================================== */
+    const TOP_BANNER_IMAGE = "banner.jpg"; 
+    // আপনি গিটহাবে banner.jpg ফাইল আপলোড করতে পারেন, অথবা কোনো ওয়েবসাইটের লিঙ্ক দিতে পারেন।
+
+
+    /* ==========================================================================
+       ২. ১৬টি খাবারের সম্পূর্ণ তালিকা (নাম, দাম এবং ছবির লিঙ্ক নিজে থেকে বদলাতে পারেন)
+       ========================================================================== */
     const menuData = [
-      // ১. ভাজা ভুঁজি (Fried Snacks)
-      { id: 1, cat: "ভাজা ভুঁজি (Fried Snacks)", bn: "চিকেন ললিপপ", en: "Chicken Lollipop", price: "₹২৫", img: "https://images.unsplash.com/photo-1527477378408-1bc43355e1ca?w=600&auto=format&fit=crop&q=80" },
-      { id: 2, cat: "ভাজা ভুঁজি (Fried Snacks)", bn: "চিকেন পকোড়া", en: "Chicken Pakora", price: "₹১৫", img: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=600&auto=format&fit=crop&q=80" },
-      { id: 3, cat: "ভাজা ভুঁজি (Fried Snacks)", bn: "চিকেন ছোট পকোড়া (100g)", en: "Small Chicken Pakora", price: "₹৩৫", img: "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?w=600&auto=format&fit=crop&q=80" },
+      // ----------------------------------------------------
+      // ক্যাটাগরি ১: ভাজা ভুঁজি (Fried Snacks)
+      // ----------------------------------------------------
+      { 
+        id: 1, 
+        cat: "ভাজা ভুঁজি (Fried Snacks)", 
+        bn: "চিকেন ললিপপ", 
+        en: "Chicken Lollipop", 
+        price: "₹২৫", 
+        img: "https://images.unsplash.com/photo-1527477378408-1bc43355e1ca?w=600&auto=format&fit=crop&q=80" 
+      },
+      { 
+        id: 2, 
+        cat: "ভাজা ভুঁজি (Fried Snacks)", 
+        bn: "চিকেন পকোড়া", 
+        en: "Chicken Pakora", 
+        price: "₹১৫", 
+        img: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=600&auto=format&fit=crop&q=80" 
+      },
+      { 
+        id: 3, 
+        cat: "ভাজা ভুঁজি (Fried Snacks)", 
+        bn: "চিকেন ছোট পকোড়া (100g)", 
+        en: "Small Chicken Pakora", 
+        price: "₹৩৫", 
+        img: "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?w=600&auto=format&fit=crop&q=80" 
+      },
 
-      // ২. চাউমিন (Chowmein)
-      { id: 4, cat: "চাউমিন (Chowmein)", bn: "এগ চিকেন চাউমিন", en: "Egg Chicken Chowmein", price: "₹৭০", img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=600&auto=format&fit=crop&q=80" },
-      { id: 5, cat: "চাউমিন (Chowmein)", bn: "চিকেন চাউমিন", en: "Chicken Chowmein", price: "₹৬৫", img: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=600&auto=format&fit=crop&q=80" },
-      { id: 6, cat: "চাউমিন (Chowmein)", bn: "এগ চাউমিন", en: "Egg Chowmein", price: "₹৫৫", img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600&auto=format&fit=crop&q=80" },
-      { id: 7, cat: "চাউমিন (Chowmein)", bn: "ভেজ চাউমিন", en: "Veg Chowmein", price: "₹৪৫", img: "https://images.unsplash.com/photo-1612927601601-6638404737ce?w=600&auto=format&fit=crop&q=80" },
+      // ----------------------------------------------------
+      // ক্যাটাগরি ২: চাউমিন (Chowmein)
+      // ----------------------------------------------------
+      { 
+        id: 4, 
+        cat: "চাউমিন (Chowmein)", 
+        bn: "এগ চিকেন চাউমিন", 
+        en: "Egg Chicken Chowmein", 
+        price: "₹৭০", 
+        img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=600&auto=format&fit=crop&q=80" 
+      },
+      { 
+        id: 5, 
+        cat: "চাউমিন (Chowmein)", 
+        bn: "চিকেন চাউমিন", 
+        en: "Chicken Chowmein", 
+        price: "₹৬৫", 
+        img: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=600&auto=format&fit=crop&q=80" 
+      },
+      { 
+        id: 6, 
+        cat: "চাউমিন (Chowmein)", 
+        bn: "এগ চাউমিন", 
+        en: "Egg Chowmein", 
+        price: "₹৫৫", 
+        img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600&auto=format&fit=crop&q=80" 
+      },
+      { 
+        id: 7, 
+        cat: "চাউমিন (Chowmein)", 
+        bn: "ভেজ চাউমিন", 
+        en: "Veg Chowmein", 
+        price: "₹৪৫", 
+        img: "https://images.unsplash.com/photo-1612927601601-6638404737ce?w=600&auto=format&fit=crop&q=80" 
+      },
 
-      // ৩. রোল (Rolls)
-      { id: 8, cat: "রোল (Rolls)", bn: "ডাবল এগ চিকেন রোল", en: "Double Egg Chicken Roll", price: "₹৬০", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600&auto=format&fit=crop&q=80" },
-      { id: 9, cat: "রোল (Rolls)", bn: "এগ চিকেন রোল", en: "Egg Chicken Roll", price: "₹৫৫", img: "https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?w=600&auto=format&fit=crop&q=80" },
-      { id: 10, cat: "রোল (Rolls)", bn: "চিকেন রোল", en: "Chicken Roll", price: "₹৫০", img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=600&auto=format&fit=crop&q=80" },
-      { id: 11, cat: "রোল (Rolls)", bn: "এগ রোল", en: "Egg Roll", price: "₹৩৫", img: "https://images.unsplash.com/photo-1541544741938-0af808871cc0?w=600&auto=format&fit=crop&q=80" },
+      // ----------------------------------------------------
+      // ক্যাটাগরি ৩: রোল (Rolls)
+      // ----------------------------------------------------
+      { 
+        id: 8, 
+        cat: "রোল (Rolls)", 
+        bn: "ডাবল এগ চিকেন রোল", 
+        en: "Double Egg Chicken Roll", 
+        price: "₹৬০", 
+        img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600&auto=format&fit=crop&q=80" 
+      },
+      { 
+        id: 9, 
+        cat: "রোল (Rolls)", 
+        bn: "এগ চিকেন রোল", 
+        en: "Egg Chicken Roll", 
+        price: "₹৫৫", 
+        img: "https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?w=600&auto=format&fit=crop&q=80" 
+      },
+      { 
+        id: 10, 
+        cat: "রোল (Rolls)", 
+        bn: "চিকেন রোল", 
+        en: "Chicken Roll", 
+        price: "₹৫০", 
+        img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=600&auto=format&fit=crop&q=80" 
+      },
+      { 
+        id: 11, 
+        cat: "রোল (Rolls)", 
+        bn: "এগ রোল", 
+        en: "Egg Roll", 
+        price: "₹৩৫", 
+        img: "https://images.unsplash.com/photo-1541544741938-0af808871cc0?w=600&auto=format&fit=crop&q=80" 
+      },
 
-      // ৪. রুটি তরকারি (Roti & Curry)
-      { id: 12, cat: "রুটি তরকারি (Roti & Curry)", bn: "হাতের আটার রুটি", en: "Handmade Atta Roti", price: "₹৫", img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&auto=format&fit=crop&q=80" },
-      { id: 13, cat: "রুটি তরকারি (Roti & Curry)", bn: "গরম পরোটা", en: "Crispy Paratha", price: "₹১০", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&auto=format&fit=crop&q=80" },
-      { id: 14, cat: "রুটি তরকারি (Roti & Curry)", bn: "চিকেন কষা", en: "Chicken Kosha", price: "₹৪৫ (২ পিস) / ₹৮০ (৪ পিস)", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&auto=format&fit=crop&q=80" },
-      { id: 15, cat: "রুটি তরকারি (Roti & Curry)", bn: "এগ তড়কা", en: "Egg Tadka Dal", price: "হাফ: ₹৩৫ / ফুল: ₹৬০", img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600&auto=format&fit=crop&q=80" },
-      { id: 16, cat: "রুটি তরকারি (Roti & Curry)", bn: "তড়কা (ভেজ)", en: "Plain Tadka Dal", price: "হাফ: ₹৩০ / ফুল: ₹৫০", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&auto=format&fit=crop&q=80" }
+      // ----------------------------------------------------
+      // ক্যাটাগরি ৪: রুটি তরকারি (Roti & Curry)
+      // ----------------------------------------------------
+      { 
+        id: 12, 
+        cat: "রুটি তরকারি (Roti & Curry)", 
+        bn: "হাতের আটার রুটি", 
+        en: "Handmade Atta Roti", 
+        price: "₹৫", 
+        img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&auto=format&fit=crop&q=80" 
+      },
+      { 
+        id: 13, 
+        cat: "রুটি তরকারি (Roti & Curry)", 
+        bn: "গরম পরোটা", 
+        en: "Crispy Paratha", 
+        price: "₹১০", 
+        img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&auto=format&fit=crop&q=80" 
+      },
+      { 
+        id: 14, 
+        cat: "রুটি তরকারি (Roti & Curry)", 
+        bn: "চিকেন কষা", 
+        en: "Chicken Kosha", 
+        price: "₹৪৫ (২ পিস) / ₹৮০ (৪ পিস)", 
+        img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&auto=format&fit=crop&q=80" 
+      },
+      { 
+        id: 15, 
+        cat: "রুটি তরকারি (Roti & Curry)", 
+        bn: "এগ তড়কা", 
+        en: "Egg Tadka Dal", 
+        price: "হাফ: ₹৩৫ / ফুল: ₹৬০", 
+        img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600&auto=format&fit=crop&q=80" 
+      },
+      { 
+        id: 16, 
+        cat: "রুটি তরকারি (Roti & Curry)", 
+        bn: "তড়কা (ভেজ)", 
+        en: "Plain Tadka Dal", 
+        price: "হাফ: ₹৩০ / ফুল: ₹৫০", 
+        img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&auto=format&fit=crop&q=80" 
+      }
     ];
+
+    /* ==========================================================================
+       নিচের কোডগুলো স্বয়ংক্রিয়ভাবে চলবে (এগুলোতে হাত দেওয়ার দরকার নেই)
+       ========================================================================== */
+    const bannerImgEl = document.getElementById('mainBannerImg');
+    if (TOP_BANNER_IMAGE && TOP_BANNER_IMAGE.trim() !== '') {
+      bannerImgEl.src = TOP_BANNER_IMAGE;
+      bannerImgEl.onerror = () => { bannerImgEl.parentElement.style.display = 'none'; };
+    } else {
+      bannerImgEl.parentElement.style.display = 'none';
+    }
 
     let stockStatus = JSON.parse(localStorage.getItem('mp_stock') || '{}');
 
@@ -202,7 +329,7 @@
             <div class="food-card ${isOut ? 'out-of-stock' : ''}">
               <div class="food-img-wrap">
                 <span class="stock-badge ${isOut ? 'badge-out' : 'badge-in'}">${isOut ? 'আজকের মতো শেষ' : 'Available'}</span>
-                <img src="${item.img}" class="food-img" alt="${item.en}" loading="lazy">
+                <img src="${item.img}" class="food-img" alt="${item.en}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600'">
               </div>
               <div class="food-info">
                 <div>
