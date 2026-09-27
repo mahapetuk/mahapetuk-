@@ -24,9 +24,8 @@
     
     .announcement { background: linear-gradient(90deg, #b91c1c, #d97706); color: white; text-align: center; padding: 8px 12px; font-size: 13px; font-weight: 600; }
 
-    /* টপ বড় ব্যানার এরিয়া */
     .top-banner-container { width: 100%; max-width: 900px; margin: 0 auto; padding: 12px 12px 0; }
-    .top-banner-img { width: 100%; height: auto; min-height: 180px; max-height: 380px; object-fit: cover; border-radius: 14px; display: block; border: 1px solid rgba(245, 158, 11, 0.3); background: #232326; }
+    .top-banner-img { width: 100%; height: auto; min-height: 190px; max-height: 380px; object-fit: cover; border-radius: 14px; display: block; border: 1px solid rgba(245, 158, 11, 0.3); box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
 
     .hero { background: radial-gradient(circle at top, #2d1810 0%, #121212 75%); padding: 25px 20px 20px; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
     .badge-tagline { display: inline-block; background: rgba(245, 158, 11, 0.15); color: var(--primary); border: 1px solid rgba(245, 158, 11, 0.3); padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 10px; }
@@ -53,12 +52,13 @@
     .food-card.out-of-stock .food-img { filter: grayscale(90%); opacity: 0.5; }
     .food-info { padding: 14px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
     .name-bn { font-size: 17px; font-weight: 700; color: #ffffff; margin-bottom: 2px; }
-    .name-en { font-size: 13px; color: var(--text-muted); }
     .food-bottom { display: flex; align-items: center; justify-content: space-between; border-top: 1px dashed rgba(255, 255, 255, 0.1); padding-top: 10px; margin-top: 10px; }
     .food-price { font-size: 17px; font-weight: 800; color: var(--primary); }
     .order-item-btn { background: rgba(37, 211, 102, 0.15); color: var(--whatsapp); border: 1px solid rgba(37, 211, 102, 0.3); padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
     .order-disabled { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); border-color: transparent; pointer-events: none; }
     
+    .loading-box { text-align: center; padding: 40px 10px; color: var(--primary); font-size: 16px; font-weight: 600; }
+
     .site-footer { margin-top: 50px; padding: 30px 20px 20px; background: #18181b; border-top: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px 20px 0 0; text-align: center; }
     .footer-tagline { font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 12px; }
     .footer-info { font-size: 14px; color: var(--text-muted); line-height: 1.8; margin-bottom: 15px; }
@@ -70,23 +70,14 @@
     .sticky-btn { flex: 1; max-width: 220px; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 14px; border-radius: 10px; font-size: 15px; font-weight: 700; text-decoration: none; color: #fff; }
     .sticky-call { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
     .sticky-whatsapp { background: linear-gradient(135deg, #10b981, #059669); }
-    
-    .admin-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; overflow-y: auto; padding: 20px 15px; }
-    .admin-content { background: #1c1c1e; max-width: 500px; margin: 25px auto; border-radius: 14px; border: 1px solid var(--primary); padding: 20px; }
-    .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
-    .admin-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
-    .admin-item-title { font-weight: 600; font-size: 15px; color: #ffffff; }
-    .admin-item-price { font-size: 13px; color: var(--primary); font-weight: 700; margin-top: 2px; }
-    .admin-btn { background: var(--primary); color: #000; font-weight: 700; border: none; padding: 12px 16px; border-radius: 8px; width: 100%; margin-top: 18px; cursor: pointer; font-size: 15px; }
   </style>
 </head>
 <body>
 
   <div class="announcement">🔥 গরম গরম মুচমুচে ফাস্ট ফুড • সেরা কোয়ালিটি ও আসল স্বাদ!</div>
 
-  <!-- টপ ব্যানার কনটেইনার -->
   <div class="top-banner-container">
-    <img id="mainBannerImg" src="" alt="মহা পেটুক ব্যানার" class="top-banner-img">
+    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&auto=format&fit=crop&q=80" alt="মহা পেটুক ব্যানার" class="top-banner-img">
   </div>
 
   <header class="hero">
@@ -106,7 +97,9 @@
     </div>
   </header>
 
-  <main class="container" id="menu-container"></main>
+  <main class="container" id="menu-container">
+    <div class="loading-box"><i class="fa-solid fa-spinner fa-spin"></i> লাইভ মেনু লোড হচ্ছে...</div>
+  </main>
 
   <footer class="site-footer">
     <div class="footer-tagline">“পেটুক মনে শান্তি আনে মহা পেটুকের খাঁটি স্বাদ!”</div>
@@ -115,24 +108,7 @@
       <p><i class="fa-solid fa-phone"></i> ফোন: <a href="tel:7679695871">76796 95871</a></p>
       <p><i class="fa-brands fa-whatsapp"></i> WhatsApp: <a href="https://wa.me/917679695871" target="_blank">76796 95871</a></p>
     </div>
-    <div style="margin-top: 15px;">
-      <button onclick="openAdmin()" style="background: transparent; border: 1px solid rgba(255,255,255,0.15); color: #777; padding: 5px 10px; border-radius: 6px; font-size: 11px; cursor: pointer;">
-        🔒 স্টক কন্ট্রোল (মালিক)
-      </button>
-    </div>
   </footer>
-
-  <!-- Admin Modal Popup -->
-  <div id="adminModal" class="admin-modal">
-    <div class="admin-content">
-      <div class="admin-header">
-        <h3 style="color: var(--primary);">১৬টি আইটেম ও স্টক কন্ট্রোল</h3>
-        <button onclick="closeAdmin()" style="background: none; border: none; color: #fff; font-size: 20px; cursor: pointer;">✕</button>
-      </div>
-      <div id="adminList"></div>
-      <button class="admin-btn" onclick="saveStock()">সেভ করুন</button>
-    </div>
-  </div>
 
   <div class="sticky-bottom-bar">
     <a href="tel:7679695871" class="sticky-btn sticky-call"><i class="fa-solid fa-phone"></i> Call Now</a>
@@ -140,262 +116,82 @@
   </div>
 
   <script>
-    /* ==========================================================================
-       ১. আপনার দোকানের টপ ব্যানার ছবি (এখানে আপনার ছবির নাম বা লিঙ্ক বসান)
-       ========================================================================== */
-    const TOP_BANNER_IMAGE = "banner.jpg"; 
-    // আপনি গিটহাবে banner.jpg ফাইল আপলোড করতে পারেন, অথবা কোনো ওয়েবসাইটের লিঙ্ক দিতে পারেন।
+    const SHEET_ID = '1Lw0i9AKTLFzz8J7DRZgKXIEkosy-TtUr0vklIps9X4Y';
+    const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
 
-
-    /* ==========================================================================
-       ২. ১৬টি খাবারের সম্পূর্ণ তালিকা (নাম, দাম এবং ছবির লিঙ্ক নিজে থেকে বদলাতে পারেন)
-       ========================================================================== */
-    const menuData = [
-      // ----------------------------------------------------
-      // ক্যাটাগরি ১: ভাজা ভুঁজি (Fried Snacks)
-      // ----------------------------------------------------
-      { 
-        id: 1, 
-        cat: "ভাজা ভুঁজি (Fried Snacks)", 
-        bn: "চিকেন ললিপপ", 
-        en: "Chicken Lollipop", 
-        price: "₹২৫", 
-        img: "https://images.unsplash.com/photo-1527477378408-1bc43355e1ca?w=600&auto=format&fit=crop&q=80" 
-      },
-      { 
-        id: 2, 
-        cat: "ভাজা ভুঁজি (Fried Snacks)", 
-        bn: "চিকেন পকোড়া", 
-        en: "Chicken Pakora", 
-        price: "₹১৫", 
-        img: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=600&auto=format&fit=crop&q=80" 
-      },
-      { 
-        id: 3, 
-        cat: "ভাজা ভুঁজি (Fried Snacks)", 
-        bn: "চিকেন ছোট পকোড়া (100g)", 
-        en: "Small Chicken Pakora", 
-        price: "₹৩৫", 
-        img: "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?w=600&auto=format&fit=crop&q=80" 
-      },
-
-      // ----------------------------------------------------
-      // ক্যাটাগরি ২: চাউমিন (Chowmein)
-      // ----------------------------------------------------
-      { 
-        id: 4, 
-        cat: "চাউমিন (Chowmein)", 
-        bn: "এগ চিকেন চাউমিন", 
-        en: "Egg Chicken Chowmein", 
-        price: "₹৭০", 
-        img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=600&auto=format&fit=crop&q=80" 
-      },
-      { 
-        id: 5, 
-        cat: "চাউমিন (Chowmein)", 
-        bn: "চিকেন চাউমিন", 
-        en: "Chicken Chowmein", 
-        price: "₹৬৫", 
-        img: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=600&auto=format&fit=crop&q=80" 
-      },
-      { 
-        id: 6, 
-        cat: "চাউমিন (Chowmein)", 
-        bn: "এগ চাউমিন", 
-        en: "Egg Chowmein", 
-        price: "₹৫৫", 
-        img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600&auto=format&fit=crop&q=80" 
-      },
-      { 
-        id: 7, 
-        cat: "চাউমিন (Chowmein)", 
-        bn: "ভেজ চাউমিন", 
-        en: "Veg Chowmein", 
-        price: "₹৪৫", 
-        img: "https://images.unsplash.com/photo-1612927601601-6638404737ce?w=600&auto=format&fit=crop&q=80" 
-      },
-
-      // ----------------------------------------------------
-      // ক্যাটাগরি ৩: রোল (Rolls)
-      // ----------------------------------------------------
-      { 
-        id: 8, 
-        cat: "রোল (Rolls)", 
-        bn: "ডাবল এগ চিকেন রোল", 
-        en: "Double Egg Chicken Roll", 
-        price: "₹৬০", 
-        img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600&auto=format&fit=crop&q=80" 
-      },
-      { 
-        id: 9, 
-        cat: "রোল (Rolls)", 
-        bn: "এগ চিকেন রোল", 
-        en: "Egg Chicken Roll", 
-        price: "₹৫৫", 
-        img: "https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?w=600&auto=format&fit=crop&q=80" 
-      },
-      { 
-        id: 10, 
-        cat: "রোল (Rolls)", 
-        bn: "চিকেন রোল", 
-        en: "Chicken Roll", 
-        price: "₹৫০", 
-        img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=600&auto=format&fit=crop&q=80" 
-      },
-      { 
-        id: 11, 
-        cat: "রোল (Rolls)", 
-        bn: "এগ রোল", 
-        en: "Egg Roll", 
-        price: "₹৩৫", 
-        img: "https://images.unsplash.com/photo-1541544741938-0af808871cc0?w=600&auto=format&fit=crop&q=80" 
-      },
-
-      // ----------------------------------------------------
-      // ক্যাটাগরি ৪: রুটি তরকারি (Roti & Curry)
-      // ----------------------------------------------------
-      { 
-        id: 12, 
-        cat: "রুটি তরকারি (Roti & Curry)", 
-        bn: "হাতের আটার রুটি", 
-        en: "Handmade Atta Roti", 
-        price: "₹৫", 
-        img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&auto=format&fit=crop&q=80" 
-      },
-      { 
-        id: 13, 
-        cat: "রুটি তরকারি (Roti & Curry)", 
-        bn: "গরম পরোটা", 
-        en: "Crispy Paratha", 
-        price: "₹১০", 
-        img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&auto=format&fit=crop&q=80" 
-      },
-      { 
-        id: 14, 
-        cat: "রুটি তরকারি (Roti & Curry)", 
-        bn: "চিকেন কষা", 
-        en: "Chicken Kosha", 
-        price: "₹৪৫ (২ পিস) / ₹৮০ (৪ পিস)", 
-        img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&auto=format&fit=crop&q=80" 
-      },
-      { 
-        id: 15, 
-        cat: "রুটি তরকারি (Roti & Curry)", 
-        bn: "এগ তড়কা", 
-        en: "Egg Tadka Dal", 
-        price: "হাফ: ₹৩৫ / ফুল: ₹৬০", 
-        img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600&auto=format&fit=crop&q=80" 
-      },
-      { 
-        id: 16, 
-        cat: "রুটি তরকারি (Roti & Curry)", 
-        bn: "তড়কা (ভেজ)", 
-        en: "Plain Tadka Dal", 
-        price: "হাফ: ₹৩০ / ফুল: ₹৫০", 
-        img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&auto=format&fit=crop&q=80" 
-      }
-    ];
-
-    /* ==========================================================================
-       নিচের কোডগুলো স্বয়ংক্রিয়ভাবে চলবে (এগুলোতে হাত দেওয়ার দরকার নেই)
-       ========================================================================== */
-    const bannerImgEl = document.getElementById('mainBannerImg');
-    if (TOP_BANNER_IMAGE && TOP_BANNER_IMAGE.trim() !== '') {
-      bannerImgEl.src = TOP_BANNER_IMAGE;
-      bannerImgEl.onerror = () => { bannerImgEl.parentElement.style.display = 'none'; };
-    } else {
-      bannerImgEl.parentElement.style.display = 'none';
-    }
-
-    let stockStatus = JSON.parse(localStorage.getItem('mp_stock') || '{}');
-
-    function renderMenu() {
-      const container = document.getElementById('menu-container');
-      container.innerHTML = '';
-      
-      const categories = [...new Set(menuData.map(i => i.cat))];
-      
-      categories.forEach(cat => {
-        const sec = document.createElement('section');
-        sec.className = 'menu-section';
-        sec.innerHTML = `<h2 class="section-title"><i class="fa-solid fa-utensils"></i> ${cat}</h2>`;
+    function parseCSV(text) {
+      const lines = text.trim().split('\n');
+      const items = [];
+      for (let i = 1; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) continue;
+        const row = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v => v.replace(/^"\vert{}"$/g, '').trim());
         
-        const grid = document.createElement('div');
-        grid.className = 'food-grid';
-        
-        menuData.filter(i => i.cat === cat).forEach(item => {
-          const isOut = stockStatus[item.id] === false;
-          grid.innerHTML += `
-            <div class="food-card ${isOut ? 'out-of-stock' : ''}">
-              <div class="food-img-wrap">
-                <span class="stock-badge ${isOut ? 'badge-out' : 'badge-in'}">${isOut ? 'আজকের মতো শেষ' : 'Available'}</span>
-                <img src="${item.img}" class="food-img" alt="${item.en}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600'">
-              </div>
-              <div class="food-info">
-                <div>
-                  <div class="name-bn">${item.bn}</div>
-                  <div class="name-en">${item.en}</div>
-                </div>
-                <div class="food-bottom">
-                  <div class="food-price">${item.price}</div>
-                  ${isOut 
-                    ? `<span class="order-item-btn order-disabled">Out of Stock</span>` 
-                    : `<a href="https://wa.me/917679695871?text=আমি%20${encodeURIComponent(item.bn)}%20অর্ডার%20করতে%20চাই" target="_blank" class="order-item-btn"><i class="fa-brands fa-whatsapp"></i> Order</a>`
-                  }
-                </div>
-              </div>
-            </div>
-          `;
-        });
-        sec.appendChild(grid);
-        container.appendChild(sec);
-      });
-    }
-
-    function openAdmin() {
-      const pass = prompt("মালিকের গোপন পাসওয়ার্ড লিখুন:");
-      if (pass === "1234") {
-        const list = document.getElementById('adminList');
-        list.innerHTML = '';
-        menuData.forEach(item => {
-          const isAvail = stockStatus[item.id] !== false;
-          list.innerHTML += `
-            <div class="admin-item">
-              <div>
-                <div class="admin-item-title">${item.bn}</div>
-                <div class="admin-item-price">${item.price}</div>
-              </div>
-              <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
-                <input type="checkbox" id="chk_${item.id}" ${isAvail ? 'checked' : ''} style="transform:scale(1.2);">
-                <span style="font-size:12px; font-weight:600; color:${isAvail ? '#22c55e' : '#ef4444'}">${isAvail ? 'স্টক আছে' : 'শেষ'}</span>
-              </label>
-            </div>
-          `;
-        });
-        document.getElementById('adminModal').style.display = 'block';
-      } else if (pass !== null) {
-        alert("ভুল পাসওয়ার্ড!");
-      }
-    }
-
-    function closeAdmin() {
-      document.getElementById('adminModal').style.display = 'none';
-    }
-
-    function saveStock() {
-      menuData.forEach(item => {
-        const chk = document.getElementById(`chk_${item.id}`);
-        if (chk) {
-          stockStatus[item.id] = chk.checked;
+        if (row.length >= 6) {
+          items.push({
+            id: row[0],
+            cat: row[1],
+            name: row[2],
+            price: row[3],
+            img: row[4],
+            status: row[5].toUpperCase()
+          });
         }
-      });
-      localStorage.setItem('mp_stock', JSON.stringify(stockStatus));
-      closeAdmin();
-      renderMenu();
-      alert("স্ট্যাটাস সফলভাবে আপডেট করা হয়েছে!");
+      }
+      return items;
     }
 
-    renderMenu();
+    async function loadLiveMenu() {
+      try {
+        const res = await fetch(CSV_URL);
+        const csvData = await res.text();
+        const items = parseCSV(csvData);
+        
+        const container = document.getElementById('menu-container');
+        container.innerHTML = '';
+
+        const categories = [...new Set(items.map(i => i.cat))];
+
+        categories.forEach(cat => {
+          const sec = document.createElement('section');
+          sec.className = 'menu-section';
+          sec.innerHTML = `<h2 class="section-title"><i class="fa-solid fa-utensils"></i> ${cat}</h2>`;
+
+          const grid = document.createElement('div');
+          grid.className = 'food-grid';
+
+          items.filter(i => i.cat === cat).forEach(item => {
+            const isAvail = item.status === 'YES';
+            grid.innerHTML += `
+              <div class="food-card ${!isAvail ? 'out-of-stock' : ''}">
+                <div class="food-img-wrap">
+                  <span class="stock-badge ${isAvail ? 'badge-in' : 'badge-out'}">${isAvail ? 'Available' : 'আজকের মতো শেষ'}</span>
+                  <img src="${item.img}" class="food-img" alt="${item.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600'">
+                </div>
+                <div class="food-info">
+                  <div class="name-bn">${item.name}</div>
+                  <div class="food-bottom">
+                    <div class="food-price">${item.price}</div>
+                    ${isAvail 
+                      ? `<a href="https://wa.me/917679695871?text=${encodeURIComponent('নমস্কার, আমি মহা পেটুক থেকে ' + item.name + ' (' + item.price + ') অর্ডার করতে চাই।')}" target="_blank" class="order-item-btn"><i class="fa-brands fa-whatsapp"></i> Order</a>`
+                      : `<span class="order-item-btn order-disabled">Out of Stock</span>`
+                    }
+                  </div>
+                </div>
+              </div>
+            `;
+          });
+
+          sec.appendChild(grid);
+          container.appendChild(sec);
+        });
+
+      } catch (err) {
+        document.getElementById('menu-container').innerHTML = '<div class="loading-box" style="color:#ef4444;">মেনু লোড হতে সমস্যা হয়েছে। গুগল শিট "Anyone with link" আছে কিনা যাচাই করুন।</div>';
+      }
+    }
+
+    loadLiveMenu();
   </script>
 </body>
 </html>
