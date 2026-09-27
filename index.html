@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>মহা পেটুক | Maha Petuk - Fast Food Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --primary: #f59e0b;
+      --accent: #ef4444;
+      --bg-dark: #121212;
+      --card-bg: #1c1c1e;
+      --text-main: #ffffff;
+      --text-muted: #a1a1aa;
+      --whatsapp: #25d366;
+      --phone: #3b82f6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body { font-family: 'Poppins', 'Hind Siliguri', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.5; padding-bottom: 95px; }
+    .announcement { background: linear-gradient(90deg, #b91c1c, #d97706); color: white; text-align: center; padding: 7px 12px; font-size: 13px; font-weight: 600; }
+    .hero { background: radial-gradient(circle at top, #2d1810 0%, #121212 75%); padding: 35px 20px 25px; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+    .badge-tagline { display: inline-block; background: rgba(245, 158, 11, 0.15); color: var(--primary); border: 1px solid rgba(245, 158, 11, 0.3); padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+    .hero-title { font-size: 38px; font-weight: 800; color: #fff; margin-bottom: 5px; }
+    .hero-sub { font-size: 18px; color: var(--primary); font-weight: 700; margin-bottom: 8px; }
+    .hero-desc { font-size: 14px; color: var(--text-muted); max-width: 500px; margin: 0 auto 18px; }
+    .location-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1); padding: 6px 14px; border-radius: 25px; font-size: 13px; color: #e4e4e7; text-decoration: none; }
+    .location-pill i { color: var(--accent); }
+    .hero-actions { display: flex; justify-content: center; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+    .btn-action { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 10px; font-size: 14px; font-weight: 700; text-decoration: none; color: white; }
+    .btn-call { background: var(--phone); }
+    .btn-wa { background: var(--whatsapp); }
+    .container { max-width: 900px; margin: 0 auto; padding: 20px 15px; }
+    .menu-section { margin-top: 30px; }
+    .section-title { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; color: var(--primary); margin-bottom: 16px; border-bottom: 2px solid rgba(245, 158, 11, 0.25); padding-bottom: 8px; }
+    .food-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+    .food-card { background: var(--card-bg); border-radius: 14px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.06); display: flex; flex-direction: column; position: relative; }
+    .food-img-wrap { position: relative; width: 100%; height: 170px; background: #232326; overflow: hidden; }
+    .food-img { width: 100%; height: 100%; object-fit: cover; }
+    .stock-badge { position: absolute; top: 10px; right: 10px; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; }
+    .badge-in { background: rgba(34, 197, 94, 0.9); color: #fff; }
+    .badge-out { background: rgba(239, 68, 68, 0.95); color: #fff; }
+    .food-card.out-of-stock .food-img { filter: grayscale(90%); opacity: 0.5; }
+    .food-info { padding: 14px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
+    .name-bn { font-size: 17px; font-weight: 700; color: #ffffff; margin-bottom: 2px; }
+    .name-en { font-size: 13px; color: var(--text-muted); }
+    .food-bottom { display: flex; align-items: center; justify-content: space-between; border-top: 1px dashed rgba(255, 255, 255, 0.1); padding-top: 10px; margin-top: 8px; }
+    .food-price { font-size: 18px; font-weight: 800; color: var(--primary); }
+    .order-item-btn { background: rgba(37, 211, 102, 0.15); color: var(--whatsapp); border: 1px solid rgba(37, 211, 102, 0.3); padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
+    .order-disabled { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); border-color: transparent; pointer-events: none; }
+    
+    /* Footer Section */
+    .site-footer {
+      margin-top: 50px;
+      padding: 30px 20px 20px;
+      background: #18181b;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px 20px 0 0;
+      text-align: center;
+    }
+    .footer-tagline {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    .footer-info {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 15px;
+    }
+    .footer-info p {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .footer-info i {
+      color: var(--primary);
+    }
+    .footer-info a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .sticky-bottom-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(18, 18, 18, 0.95); backdrop-filter: blur(10px); border-top: 1px solid rgba(255, 255, 255, 0.12); padding: 10px 15px; display: flex; justify-content: center; gap: 12px; z-index: 999; }
+    .sticky-btn { flex: 1; max-width: 220px; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 14px; border-radius: 10px; font-size: 15px; font-weight: 700; text-decoration: none; color: #fff; }
+    .sticky-call { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
+    .sticky-whatsapp { background: linear-gradient(135deg, #10b981, #059669); }
+    
+    /* Admin Modal */
+    .admin-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; overflow-y: auto; padding: 20px 15px; }
+    .admin-content { background: #1c1c1e; max-width: 480px; margin: 30px auto; border-radius: 14px; border: 1px solid var(--primary); padding: 20px; }
+    .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+    .admin-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .admin-btn { background: var(--primary); color: #000; font-weight: 700; border: none; padding: 10px 16px; border-radius: 8px; width: 100%; margin-top: 15px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <div class="announcement">🔥 গরম গরম মুচমুচে ফাস্ট ফুড • সেরা কোয়ালিটি ও আসল স্বাদ!</div>
+
+  <header class="hero">
+    <span class="badge-tagline">Tasty Food • Happy Mood</span>
+    <h1 class="hero-title">মহা পেটুক</h1>
+    <div class="hero-sub">Maha Petuk Fast Food Center</div>
+    <p class="hero-desc">ভালো খাবার ভালো মুড! খাবার মানে আনন্দ।</p>
+    
+    <a href="https://maps.google.com/?q=Amta+Sahapara+Bajar" target="_blank" class="location-pill">
+      <i class="fa-solid fa-location-dot"></i>
+      <span>আমতা সাহাপাড়া বাজার (Amta Sahapara Bajar)</span>
+    </a>
+
+    <div class="hero-actions">
+      <a href="tel:7679695871" class="btn-action btn-call"><i class="fa-solid fa-phone-volume"></i> কল করুন</a>
+      <a href="https://wa.me/917679695871?text=নমস্কার,%20আমি%20মহা%20পেটুক%20থেকে%20খাবার%20অর্ডার%20করতে%20চাই।" target="_blank" class="btn-action btn-wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+    </div>
+  </header>
+
+  <main class="container" id="menu-container"></main>
+
+  <!-- Footer with Tagline, Contact & Address -->
+  <footer class="site-footer">
+    <div class="footer-tagline">“পেটুক মনে শান্তি আনে মহা পেটুকের খাঁটি স্বাদ!”</div>
+    
+    <div class="footer-info">
+      <p><i class="fa-solid fa-location-dot"></i> ঠিকানা: আমতা সাহাপাড়া বাজার, হাওড়া</p>
+      <p><i class="fa-solid fa-phone"></i> ফোন: <a href="tel:7679695871">76796 95871</a></p>
+      <p><i class="fa-brands fa-whatsapp"></i> WhatsApp: <a href="https://wa.me/917679695871" target="_blank">76796 95871</a></p>
+    </div>
+
+    <div style="margin-top: 15px;">
+      <button onclick="openAdmin()" style="background: transparent; border: 1px solid rgba(255,255,255,0.15); color: #777; padding: 5px 10px; border-radius: 6px; font-size: 11px; cursor: pointer;">
+        🔒 স্টক কন্ট্রোল (মালিক)
+      </button>
+    </div>
+  </footer>
+
+  <!-- Admin Modal Popup -->
+  <div id="adminModal" class="admin-modal">
+    <div class="admin-content">
+      <div class="admin-header">
+        <h3 style="color: var(--primary);">খাবার স্টক কন্ট্রোল</h3>
+        <button onclick="closeAdmin()" style="background: none; border: none; color: #fff; font-size: 20px;">✕</button>
+      </div>
+      <div id="adminList"></div>
+      <button class="admin-btn" onclick="saveStock()">সেভ করুন</button>
+    </div>
+  </div>
+
+  <div class="sticky-bottom-bar">
+    <a href="tel:7679695871" class="sticky-btn sticky-call"><i class="fa-solid fa-phone"></i> Call Now</a>
+    <a href="https://wa.me/917679695871?text=নমস্কার,%20আমি%20খাবার%20অর্ডার%20করতে%20চাই" target="_blank" class="sticky-btn sticky-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+  </div>
+
+  <script>
+    const menuData = [
+      { id: 1, cat: "ভাজা ভুঁজি (Fried Snacks)", bn: "চিকেন ললিপপ", en: "Chicken Lollipop", price: "₹২৫", img: "https://images.unsplash.com/photo-1527477378408-1bc43355e1ca?w=500" },
+      { id: 2, cat: "ভাজা ভুঁজি (Fried Snacks)", bn: "চিকেন পকোড়া", en: "Chicken Pakora", price: "₹১৫", img: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=500" },
+      { id: 3, cat: "ভাজা ভুঁজি (Fried Snacks)", bn: "চিকেন ছোট পকোড়া (100g)", en: "Small Chicken Pakora", price: "₹৩৫", img: "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?w=500" },
+      
+      { id: 4, cat: "চাউমিন (Chowmein)", bn: "এগ চিকেন চাউমিন", en: "Egg Chicken Chowmein", price: "₹৭০", img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=500" },
+      { id: 5, cat: "চাউমিন (Chowmein)", bn: "চিকেন চাউমিন", en: "Chicken Chowmein", price: "₹৬৫", img: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=500" },
+      { id: 6, cat: "চাউমিন (Chowmein)", bn: "এগ চাউমিন", en: "Egg Chowmein", price: "₹৫৫", img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=500" },
+      { id: 7, cat: "চাউমিন (Chowmein)", bn: "ভেজ চাউমিন", en: "Veg Chowmein", price: "₹৪৫", img: "https://images.unsplash.com/photo-1612927601601-6638404737ce?w=500" },
+
+      { id: 8, cat: "রোল (Rolls)", bn: "ডাবল এগ চিকেন রোল", en: "Double Egg Chicken Roll", price: "₹৬০", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500" },
+      { id: 9, cat: "রোল (Rolls)", bn: "এগ চিকেন রোল", en: "Egg Chicken Roll", price: "₹৫৫", img: "https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?w=500" },
+      { id: 10, cat: "রোল (Rolls)", bn: "চিকেন রোল", en: "Chicken Roll", price: "₹৫০", img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=500" },
+      { id: 11, cat: "রোল (Rolls)", bn: "এগ রোল", en: "Egg Roll", price: "₹৩৫", img: "https://images.unsplash.com/photo-1541544741938-0af808871cc0?w=500" },
+
+      { id: 12, cat: "রুটি তরকারি (Roti & Curry)", bn: "হাতের আটার রুটি", en: "Handmade Atta Roti", price: "₹৫", img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=500" },
+      { id: 13, cat: "রুটি তরকারি (Roti & Curry)", bn: "গরম পরোটা", en: "Crispy Paratha", price: "₹১০", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500" },
+      { id: 14, cat: "রুটি তরকারি (Roti & Curry)", bn: "চিকেন কষা", en: "Chicken Kosha", price: "₹৪৫ / ₹৮০", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=500" },
+      { id: 15, cat: "রুটি তরকারি (Roti & Curry)", bn: "এগ তড়কা", en: "Egg Tadka Dal", price: "₹৩৫ / ₹৬০", img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=500" },
+      { id: 16, cat: "রুটি তরকারি (Roti & Curry)", bn: "তড়কা (ভেজ)", en: "Plain Tadka Dal", price: "₹৩০ / ₹৫০", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500" }
+    ];
+
+    let stockStatus = JSON.parse(localStorage.getItem('mp_stock') || '{}');
+
+    function renderMenu() {
+      const container = document.getElementById('menu-container');
+      container.innerHTML = '';
+      
+      const categories = [...new Set(menuData.map(i => i.cat))];
+      
+      categories.forEach(cat => {
+        const sec = document.createElement('section');
+        sec.className = 'menu-section';
+        sec.innerHTML = `<h2 class="section-title"><i class="fa-solid fa-utensils"></i> ${cat}</h2>`;
+        
+        const grid = document.createElement('div');
+        grid.className = 'food-grid';
+        
+        menuData.filter(i => i.cat === cat).forEach(item => {
+          const isOut = stockStatus[item.id] === false;
+          grid.innerHTML += `
+            <div class="food-card ${isOut ? 'out-of-stock' : ''}">
+              <div class="food-img-wrap">
+                <span class="stock-badge ${isOut ? 'badge-out' : 'badge-in'}">${isOut ? 'আজকের মতো শেষ' : 'Available'}</span>
+                <img src="${item.img}" class="food-img" alt="${item.en}">
+              </div>
+              <div class="food-info">
+                <div>
+                  <div class="name-bn">${item.bn}</div>
+                  <div class="name-en">${item.en}</div>
+                </div>
+                <div class="food-bottom">
+                  <div class="food-price">${item.price}</div>
+                  ${isOut 
+                    ? `<span class="order-item-btn order-disabled">Out of Stock</span>` 
+                    : `<a href="https://wa.me/917679695871?text=আমি%20${encodeURIComponent(item.bn)}%20অর্ডার%20করতে%20চাই" target="_blank" class="order-item-btn"><i class="fa-brands fa-whatsapp"></i> Order</a>`
+                  }
+                </div>
+              </div>
+            </div>
+          `;
+        });
+        sec.appendChild(grid);
+        container.appendChild(sec);
+      });
+    }
+
+    function openAdmin() {
+      const pass = prompt("মালিকের গোপন পাসওয়ার্ড লিখুন:");
+      if (pass === "1234") {
+        const list = document.getElementById('adminList');
+        list.innerHTML = '';
+        menuData.forEach(item => {
+          const isAvail = stockStatus[item.id] !== false;
+          list.innerHTML += `
+            <div class="admin-item">
+              <span>${item.bn}</span>
+              <label>
+                <input type="checkbox" id="chk_${item.id}" ${isAvail ? 'checked' : ''}>
+                <span style="font-size:12px; margin-left:4px;">${isAvail ? 'স্টক আছে' : 'শেষ'}</span>
+              </label>
+            </div>
+          `;
+        });
+        document.getElementById('adminModal').style.display = 'block';
+      } else if (pass !== null) {
+        alert("ভুল পাসওয়ার্ড!");
+      }
+    }
+
+    function closeAdmin() {
+      document.getElementById('adminModal').style.display = 'none';
+    }
+
+    function saveStock() {
+      menuData.forEach(item => {
+        const chk = document.getElementById(`chk_${item.id}`);
+        if (chk) {
+          stockStatus[item.id] = chk.checked;
+        }
+      });
+      localStorage.setItem('mp_stock', JSON.stringify(stockStatus));
+      closeAdmin();
+      renderMenu();
+      alert("স্ট্যাটাস সফলভাবে আপডেট করা হয়েছে!");
+    }
+
+    renderMenu();
+  </script>
+</body>
+</html>
