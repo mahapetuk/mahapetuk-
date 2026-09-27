@@ -4,9 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>মহা পেটুক | Maha Petuk - Fast Food Center</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     :root {
@@ -20,13 +17,11 @@
       --phone: #3b82f6;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    body { font-family: 'Poppins', 'Hind Siliguri', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.5; padding-bottom: 95px; }
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Hind Siliguri', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.5; padding-bottom: 95px; }
     
     .announcement { background: linear-gradient(90deg, #b91c1c, #d97706); color: white; text-align: center; padding: 8px 12px; font-size: 13px; font-weight: 600; }
-
     .top-banner-container { width: 100%; max-width: 900px; margin: 0 auto; padding: 12px 12px 0; }
     .top-banner-img { width: 100%; height: auto; min-height: 190px; max-height: 380px; object-fit: cover; border-radius: 14px; display: block; border: 1px solid rgba(245, 158, 11, 0.3); box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-
     .hero { background: radial-gradient(circle at top, #2d1810 0%, #121212 75%); padding: 25px 20px 20px; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
     .badge-tagline { display: inline-block; background: rgba(245, 158, 11, 0.15); color: var(--primary); border: 1px solid rgba(245, 158, 11, 0.3); padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 10px; }
     .hero-title { font-size: 36px; font-weight: 800; color: #fff; margin-bottom: 4px; }
@@ -38,11 +33,10 @@
     .btn-action { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 10px; font-size: 14px; font-weight: 700; text-decoration: none; color: white; }
     .btn-call { background: var(--phone); }
     .btn-wa { background: var(--whatsapp); }
-
     .container { max-width: 900px; margin: 0 auto; padding: 20px 15px; }
     .menu-section { margin-top: 32px; }
     .section-title { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; color: var(--primary); margin-bottom: 16px; border-bottom: 2px solid rgba(245, 158, 11, 0.25); padding-bottom: 8px; }
-    .food-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+    .food-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 16px; }
     .food-card { background: var(--card-bg); border-radius: 14px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.06); display: flex; flex-direction: column; position: relative; }
     .food-img-wrap { position: relative; width: 100%; height: 180px; background: #232326; overflow: hidden; }
     .food-img { width: 100%; height: 100%; object-fit: cover; }
@@ -51,21 +45,28 @@
     .badge-out { background: rgba(239, 68, 68, 0.95); color: #fff; }
     .food-card.out-of-stock .food-img { filter: grayscale(90%); opacity: 0.5; }
     .food-info { padding: 14px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
-    .name-bn { font-size: 17px; font-weight: 700; color: #ffffff; margin-bottom: 2px; }
-    .food-bottom { display: flex; align-items: center; justify-content: space-between; border-top: 1px dashed rgba(255, 255, 255, 0.1); padding-top: 10px; margin-top: 10px; }
-    .food-price { font-size: 17px; font-weight: 800; color: var(--primary); }
-    .order-item-btn { background: rgba(37, 211, 102, 0.15); color: var(--whatsapp); border: 1px solid rgba(37, 211, 102, 0.3); padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
-    .order-disabled { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); border-color: transparent; pointer-events: none; }
+    .name-bn { font-size: 17px; font-weight: 700; color: #ffffff; margin-bottom: 6px; }
+    
+    .food-price-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .food-price { font-size: 16px; font-weight: 800; color: var(--primary); }
+    .total-price-text { font-size: 13px; color: var(--text-muted); font-weight: 600; }
+    .qty-control-wrap { display: flex; align-items: center; justify-content: space-between; background: rgba(255, 255, 255, 0.05); padding: 6px 10px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(255, 255, 255, 0.08); }
+    .qty-label { font-size: 13px; color: #ddd; font-weight: 600; }
+    .qty-btn-group { display: flex; align-items: center; gap: 8px; }
+    .qty-btn { width: 28px; height: 28px; background: #2a2a2e; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 6px; color: #fff; font-size: 16px; font-weight: bold; display: flex; align-items: center; justify-content: center; cursor: pointer; user-select: none; }
+    .qty-btn:active { background: var(--primary); color: #000; }
+    .qty-count { font-size: 15px; font-weight: 700; color: #fff; min-width: 20px; text-align: center; }
+    .food-bottom { border-top: 1px dashed rgba(255, 255, 255, 0.1); padding-top: 10px; }
+    .order-item-btn { width: 100%; background: var(--whatsapp); color: #ffffff; border: none; padding: 10px 12px; border-radius: 8px; font-size: 14px; font-weight: 700; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; transition: 0.2s; }
+    .order-disabled { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); border-color: transparent; pointer-events: none; width: 100%; text-align: center; display: block; padding: 8px; border-radius: 8px; font-size: 13px; font-weight: 600; }
     
     .loading-box { text-align: center; padding: 40px 10px; color: var(--primary); font-size: 16px; font-weight: 600; }
-
     .site-footer { margin-top: 50px; padding: 30px 20px 20px; background: #18181b; border-top: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px 20px 0 0; text-align: center; }
     .footer-tagline { font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 12px; }
     .footer-info { font-size: 14px; color: var(--text-muted); line-height: 1.8; margin-bottom: 15px; }
     .footer-info p { display: flex; align-items: center; justify-content: center; gap: 8px; }
     .footer-info i { color: var(--primary); }
     .footer-info a { color: #fff; text-decoration: none; font-weight: 600; }
-
     .sticky-bottom-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(18, 18, 18, 0.95); backdrop-filter: blur(10px); border-top: 1px solid rgba(255, 255, 255, 0.12); padding: 10px 15px; display: flex; justify-content: center; gap: 12px; z-index: 999; }
     .sticky-btn { flex: 1; max-width: 220px; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 14px; border-radius: 10px; font-size: 15px; font-weight: 700; text-decoration: none; color: #fff; }
     .sticky-call { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
@@ -73,13 +74,10 @@
   </style>
 </head>
 <body>
-
   <div class="announcement">🔥 গরম গরম মুচমুচে ফাস্ট ফুড • সেরা কোয়ালিটি ও আসল স্বাদ!</div>
-
   <div class="top-banner-container">
     <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&auto=format&fit=crop&q=80" alt="মহা পেটুক ব্যানার" class="top-banner-img">
   </div>
-
   <header class="hero">
     <span class="badge-tagline">Tasty Food • Happy Mood</span>
     <h1 class="hero-title">মহা পেটুক</h1>
@@ -90,17 +88,14 @@
       <i class="fa-solid fa-location-dot"></i>
       <span>আমতা সাহাপাড়া বাজার (Amta Sahapara Bajar)</span>
     </a>
-
     <div class="hero-actions">
       <a href="tel:7679695871" class="btn-action btn-call"><i class="fa-solid fa-phone-volume"></i> কল করুন</a>
       <a href="https://wa.me/917679695871?text=নমস্কার,%20আমি%20মহা%20পেটুক%20থেকে%20খাবার%20অর্ডার%20করতে%20চাই।" target="_blank" class="btn-action btn-wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
     </div>
   </header>
-
   <main class="container" id="menu-container">
     <div class="loading-box"><i class="fa-solid fa-spinner fa-spin"></i> লাইভ মেনু লোড হচ্ছে...</div>
   </main>
-
   <footer class="site-footer">
     <div class="footer-tagline">“পেটুক মনে শান্তি আনে মহা পেটুকের খাঁটি স্বাদ!”</div>
     <div class="footer-info">
@@ -109,16 +104,19 @@
       <p><i class="fa-brands fa-whatsapp"></i> WhatsApp: <a href="https://wa.me/917679695871" target="_blank">76796 95871</a></p>
     </div>
   </footer>
-
   <div class="sticky-bottom-bar">
     <a href="tel:7679695871" class="sticky-btn sticky-call"><i class="fa-solid fa-phone"></i> Call Now</a>
     <a href="https://wa.me/917679695871?text=নমস্কার,%20আমি%20খাবার%20অর্ডার%20করতে%20চাই" target="_blank" class="sticky-btn sticky-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
   </div>
-
   <script>
     const SHEET_ID = '1Lw0i9AKTLFzz8J7DRZgKXIEkosy-TtUr0vklIps9X4Y';
     const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
-
+    const quantities = {};
+    let allMenuItems = [];
+    function extractNumericPrice(priceStr) {
+      const match = priceStr.match(/\d+/);
+      return match ? parseInt(match[0], 10) : 0;
+    }
     function parseCSV(text) {
       const lines = text.trim().split('\n');
       const items = [];
@@ -140,28 +138,54 @@
       }
       return items;
     }
-
+    function changeQty(id, delta) {
+      const current = quantities[id] || 1;
+      const updated = Math.max(1, current + delta);
+      quantities[id] = updated;
+      const qtyElem = document.getElementById(`qty-${id}`);
+      if (qtyElem) qtyElem.innerText = updated;
+      const item = allMenuItems.find(i => String(i.id) === String(id));
+      if (item) {
+        const unitNum = extractNumericPrice(item.price);
+        const totalElem = document.getElementById(`total-${id}`);
+        if (unitNum > 0 && totalElem) {
+          totalElem.innerText = `মোট: ₹${unitNum * updated}`;
+        }
+      }
+    }
+    function sendOrder(id) {
+      const item = allMenuItems.find(i => String(i.id) === String(id));
+      if (!item) return;
+      const qty = quantities[id] || 1;
+      const unitNum = extractNumericPrice(item.price);
+      let text = '';
+      if (unitNum > 0) {
+        const total = unitNum * qty;
+        text = `নমস্কার, আমি মহা পেটুক থেকে ${item.name} - ${qty} প্লেট (মোট দাম: ₹${total}) অর্ডার করতে চাই।`;
+      } else {
+        text = `নমস্কার, আমি মহা পেটুক থেকে ${item.name} (${item.price}) - ${qty} প্লেট অর্ডার করতে চাই।`;
+      }
+      window.open(`https://wa.me/917679695871?text=${encodeURIComponent(text)}`, '_blank');
+    }
     async function loadLiveMenu() {
       try {
         const res = await fetch(CSV_URL);
         const csvData = await res.text();
-        const items = parseCSV(csvData);
+        allMenuItems = parseCSV(csvData);
         
         const container = document.getElementById('menu-container');
         container.innerHTML = '';
-
-        const categories = [...new Set(items.map(i => i.cat))];
-
+        const categories = [...new Set(allMenuItems.map(i => i.cat))];
         categories.forEach(cat => {
           const sec = document.createElement('section');
           sec.className = 'menu-section';
           sec.innerHTML = `<h2 class="section-title"><i class="fa-solid fa-utensils"></i> ${cat}</h2>`;
-
           const grid = document.createElement('div');
           grid.className = 'food-grid';
-
-          items.filter(i => i.cat === cat).forEach(item => {
+          allMenuItems.filter(i => i.cat === cat).forEach(item => {
             const isAvail = item.status === 'YES';
+            quantities[item.id] = 1;
+            const unitPrice = extractNumericPrice(item.price);
             grid.innerHTML += `
               <div class="food-card ${!isAvail ? 'out-of-stock' : ''}">
                 <div class="food-img-wrap">
@@ -170,27 +194,38 @@
                 </div>
                 <div class="food-info">
                   <div class="name-bn">${item.name}</div>
+                  
+                  <div class="food-price-row">
+                    <span class="food-price">${item.price}</span>
+                    <span class="total-price-text" id="total-${item.id}">${unitPrice > 0 ? 'মোট: ₹' + unitPrice : ''}</span>
+                  </div>
+                  ${isAvail ? `
+                    <div class="qty-control-wrap">
+                      <span class="qty-label">প্লেট সংখ্যা:</span>
+                      <div class="qty-btn-group">
+                        <button class="qty-btn" type="button" onclick="changeQty('${item.id}', -1)">-</button>
+                        <span class="qty-count" id="qty-${item.id}">1</span>
+                        <button class="qty-btn" type="button" onclick="changeQty('${item.id}', 1)">+</button>
+                      </div>
+                    </div>
+                  ` : ''}
                   <div class="food-bottom">
-                    <div class="food-price">${item.price}</div>
                     ${isAvail 
-                      ? `<a href="https://wa.me/917679695871?text=${encodeURIComponent('নমস্কার, আমি মহা পেটুক থেকে ' + item.name + ' (' + item.price + ') অর্ডার করতে চাই।')}" target="_blank" class="order-item-btn"><i class="fa-brands fa-whatsapp"></i> Order</a>`
-                      : `<span class="order-item-btn order-disabled">Out of Stock</span>`
+                      ? `<button class="order-item-btn" type="button" onclick="sendOrder('${item.id}')"><i class="fa-brands fa-whatsapp"></i> Order on WhatsApp</button>`
+                      : `<span class="order-disabled">Out of Stock</span>`
                     }
                   </div>
                 </div>
               </div>
             `;
           });
-
           sec.appendChild(grid);
           container.appendChild(sec);
         });
-
       } catch (err) {
-        document.getElementById('menu-container').innerHTML = '<div class="loading-box" style="color:#ef4444;">মেনু লোড হতে সমস্যা হয়েছে। গুগল শিট "Anyone with link" আছে কিনা যাচাই করুন।</div>';
+        document.getElementById('menu-container').innerHTML = '<div class="loading-box" style="color:#ef4444;">মেনু লোড হতে সমস্যা হয়েছে। গুগল শিট "Anyone with link" আছে কিনা দেখে নিন।</div>';
       }
     }
-
     loadLiveMenu();
   </script>
 </body>
