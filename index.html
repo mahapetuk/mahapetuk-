@@ -112,11 +112,10 @@
     <a href="tel:7679695871" class="sticky-btn sticky-call"><i class="fa-solid fa-phone"></i> Call Now</a>
     <a href="https://wa.me/917679695871?text=নমস্কার,%20আমি%20খাবার%20অর্ডার%20করতে%20চাই" target="_blank" class="sticky-btn sticky-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
   </div>
+
   <script>
     const SHEET_ID = '1Lw0i9AKTLFzz8J7DRZgKXIEkosy-TtUr0vklIps9X4Y';
     const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
-    const quantities = {};
-    let allMenuItems = [];
 
     function extractNumericPrice(priceStr) {
       if (!priceStr) return 0;
@@ -124,65 +123,51 @@
       return match ? parseInt(match[0], 10) : 0;
     }
 
+    // CSV লাইনগুলো সঠিকভাবে আলাদা করার ফাংশন
+    function parseCSVLine(text) {
+      let p = '', c = false, r = [];
+      for (let i = 0; i < text.length; i++) {
+        let cc = text[i], nc = text[i+1];
+        if (cc === '"') {
+          if (c && nc === '"') { p += '"'; i++; }
+          else { c = !c; }
+        } else if (cc === ',' && !c) {
+          r.push(p);
+          p = '';
+        } else {
+          p += cc;
+        }
+      }
+      r.push(p);
+      return r;
+    }
+
     function parseCSV(text) {
-      const lines = text.trim().split('\n');
+      const lines = text.trim().split(/\r?\n/);
       const items = [];
       for (let i = 1; i < lines.length; i++) {
         const line = lines[i].trim();
         if (!line) continue;
-        const row = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v => v.replace(/^"\vert{}"$/g, '').trim());
-        
+        const row = parseCSVLine(line).map(s => s.trim());
         if (row.length >= 6) {
           items.push({
-            id: String(row[0] || i).trim(),
-            cat: (row[1] || 'অন্যান্য').trim(),
-            name: (row[2] || '').trim(),
-            price: (row[3] || '0').trim(),
-            img: (row[4] || '').trim(),
-            status: (row[5] || '').toUpperCase().trim()
+            uniqueIndex: i,
+            cat: row[1] || 'অন্যান্য',
+            name: row[2] || 'খাবার',
+            price: row[3] || '0',
+            img: row[4] || '',
+            status: (row[5] || '').toUpperCase()
           });
         }
       }
       return items;
     }
 
-    function changeQty(id, delta) {
-      const current = quantities[id] || 1;
-      const updated = Math.max(1, current + delta);
-      quantities[id] = updated;
-      const qtyElem = document.getElementById(`qty-${id}`);
-      if (qtyElem) qtyElem.innerText = updated;
-      
-      const item = allMenuItems.find(i => String(i.id) === String(id));
-      if (item) {
-        const unitNum = extractNumericPrice(item.price);
-        const totalElem = document.getElementById(`total-${id}`);
-        if (unitNum > 0 && totalElem) {
-          totalElem.innerText = `মোট: ₹${unitNum * updated}`;
-        }
-      }
-    }
-
-    function sendOrder(id) {
-      const item = allMenuItems.find(i => String(i.id) === String(id));
-      if (!item) return;
-      const qty = quantities[id] || 1;
-      const unitNum = extractNumericPrice(item.price);
-      let text = '';
-      if (unitNum > 0) {
-        const total = unitNum * qty;
-        text = `নমস্কার, আমি মহা পেটুক থেকে ${item.name} - ${qty} প্লেট (মোট দাম: ₹${total}) অর্ডার করতে চাই।`;
-      } else {
-        text = `নমস্কার, আমি মহা পেটুক থেকে ${item.name} (${item.price}) - ${qty} প্লেট অর্ডার করতে চাই।`;
-      }
-      window.open(`https://wa.me/917679695871?text=${encodeURIComponent(text)}`, '_blank');
-    }
-
     async function loadLiveMenu() {
       try {
         const res = await fetch(CSV_URL);
         const csvData = await res.text();
-        allMenuItems = parseCSV(csvData);
+        const allMenuItems = parseCSV(csvData);
         
         const container = document.getElementById('menu-container');
         container.innerHTML = '';
@@ -196,47 +181,80 @@
           const grid = document.createElement('div');
           grid.className = 'food-grid';
 
-          let gridHtml = '';
           allMenuItems.filter(i => i.cat === cat).forEach(item => {
             const isAvail = item.status === 'YES';
-            quantities[item.id] = 1;
             const unitPrice = extractNumericPrice(item.price);
-            
-            gridHtml += `
-              <div class="food-card ${!isAvail ? 'out-of-stock' : ''}">
-                <div class="food-img-wrap">
-                  <span class="stock-badge ${isAvail ? 'badge-in' : 'badge-out'}">${isAvail ? 'Available' : 'আজকের মতো শেষ'}</span>
-                  <img src="${item.img}" class="food-img" alt="${item.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600'">
+            let currentQty = 1;
+
+            const card = document.createElement('div');
+            card.className = `food-card ${!isAvail ? 'out-of-stock' : ''}`;
+
+            card.innerHTML = `
+              <div class="food-img-wrap">
+                <span class="stock-badge ${isAvail ? 'badge-in' : 'badge-out'}">${isAvail ? 'Available' : 'আজকের মতো শেষ'}</span>
+                <img src="${item.img}" class="food-img" alt="${item.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600'">
+              </div>
+              <div class="food-info">
+                <div class="name-bn">${item.name}</div>
+                <div class="food-price-row">
+                  <span class="food-price">${item.price}</span>
+                  <span class="total-price-text item-total-display">${unitPrice > 0 ? 'মোট: ₹' + unitPrice : ''}</span>
                 </div>
-                <div class="food-info">
-                  <div class="name-bn">${item.name}</div>
-                  
-                  <div class="food-price-row">
-                    <span class="food-price">${item.price}</span>
-                    <span class="total-price-text" id="total-${item.id}">${unitPrice > 0 ? 'মোট: ₹' + unitPrice : ''}</span>
-                  </div>
-                  ${isAvail ? `
-                    <div class="qty-control-wrap">
-                      <span class="qty-label">প্লেট সংখ্যা:</span>
-                      <div class="qty-btn-group">
-                        <button class="qty-btn" type="button" onclick="changeQty('${item.id}', -1)">-</button>
-                        <span class="qty-count" id="qty-${item.id}">1</span>
-                        <button class="qty-btn" type="button" onclick="changeQty('${item.id}', 1)">+</button>
-                      </div>
+                ${isAvail ? `
+                  <div class="qty-control-wrap">
+                    <span class="qty-label">প্লেট সংখ্যা:</span>
+                    <div class="qty-btn-group">
+                      <button class="qty-btn btn-minus" type="button">-</button>
+                      <span class="qty-count item-qty-display">1</span>
+                      <button class="qty-btn btn-plus" type="button">+</button>
                     </div>
-                  ` : ''}
-                  <div class="food-bottom">
-                    ${isAvail 
-                      ? `<button class="order-item-btn" type="button" onclick="sendOrder('${item.id}')"><i class="fa-brands fa-whatsapp"></i> Order on WhatsApp</button>`
-                      : `<span class="order-disabled">Out of Stock</span>`
-                    }
                   </div>
+                ` : ''}
+                <div class="food-bottom">
+                  ${isAvail 
+                    ? `<button class="order-item-btn btn-order" type="button"><i class="fa-brands fa-whatsapp"></i> Order on WhatsApp</button>`
+                    : `<span class="order-disabled">Out of Stock</span>`
+                  }
                 </div>
               </div>
             `;
+
+            if (isAvail) {
+              const qtyDisplay = card.querySelector('.item-qty-display');
+              const totalDisplay = card.querySelector('.item-total-display');
+              const btnMinus = card.querySelector('.btn-minus');
+              const btnPlus = card.querySelector('.btn-plus');
+              const btnOrder = card.querySelector('.btn-order');
+
+              btnMinus.addEventListener('click', () => {
+                if (currentQty > 1) {
+                  currentQty--;
+                  qtyDisplay.innerText = currentQty;
+                  if (unitPrice > 0) totalDisplay.innerText = `মোট: ₹${unitPrice * currentQty}`;
+                }
+              });
+
+              btnPlus.addEventListener('click', () => {
+                currentQty++;
+                qtyDisplay.innerText = currentQty;
+                if (unitPrice > 0) totalDisplay.innerText = `মোট: ₹${unitPrice * currentQty}`;
+              });
+
+              btnOrder.addEventListener('click', () => {
+                let msg = '';
+                if (unitPrice > 0) {
+                  const total = unitPrice * currentQty;
+                  msg = `নমস্কার, আমি মহা পেটুক থেকে ${item.name} - ${currentQty} প্লেট (মোট দাম: ₹${total}) অর্ডার করতে চাই।`;
+                } else {
+                  msg = `নমস্কার, আমি মহা পেটুক থেকে ${item.name} (${item.price}) - ${currentQty} প্লেট অর্ডার করতে চাই।`;
+                }
+                window.open(`https://wa.me/917679695871?text=${encodeURIComponent(msg)}`, '_blank');
+              });
+            }
+
+            grid.appendChild(card);
           });
           
-          grid.innerHTML = gridHtml;
           sec.appendChild(grid);
           container.appendChild(sec);
         });
@@ -244,6 +262,7 @@
         document.getElementById('menu-container').innerHTML = '<div class="loading-box" style="color:#ef4444;">মেনু লোড হতে সমস্যা হয়েছে। গুগল শিট "Anyone with link" আছে কিনা দেখে নিন।</div>';
       }
     }
+
     loadLiveMenu();
   </script>
 </body>
