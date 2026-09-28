@@ -77,7 +77,6 @@
   <div class="announcement">🔥 গরম গরম মুচমুচে ফাস্ট ফুড • সেরা কোয়ালিটি ও আসল স্বাদ!</div>
   <div class="top-banner-container">
     <img src="banner.png" alt="মহা পেটুক ব্যানার" class="top-banner-img">
-
   </div>
   <header class="hero">
     <span class="badge-tagline">Tasty Food • Happy Mood</span>
@@ -118,10 +117,13 @@
     const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
     const quantities = {};
     let allMenuItems = [];
+
     function extractNumericPrice(priceStr) {
-      const match = priceStr.match(/\d+/);
+      if (!priceStr) return 0;
+      const match = String(priceStr).match(/\d+/);
       return match ? parseInt(match[0], 10) : 0;
     }
+
     function parseCSV(text) {
       const lines = text.trim().split('\n');
       const items = [];
@@ -132,23 +134,25 @@
         
         if (row.length >= 6) {
           items.push({
-            id: row[0],
-            cat: row[1],
-            name: row[2],
-            price: row[3],
-            img: row[4],
-            status: row[5].toUpperCase()
+            id: String(row[0] || i).trim(),
+            cat: (row[1] || 'অন্যান্য').trim(),
+            name: (row[2] || '').trim(),
+            price: (row[3] || '0').trim(),
+            img: (row[4] || '').trim(),
+            status: (row[5] || '').toUpperCase().trim()
           });
         }
       }
       return items;
     }
+
     function changeQty(id, delta) {
       const current = quantities[id] || 1;
       const updated = Math.max(1, current + delta);
       quantities[id] = updated;
       const qtyElem = document.getElementById(`qty-${id}`);
       if (qtyElem) qtyElem.innerText = updated;
+      
       const item = allMenuItems.find(i => String(i.id) === String(id));
       if (item) {
         const unitNum = extractNumericPrice(item.price);
@@ -158,6 +162,7 @@
         }
       }
     }
+
     function sendOrder(id) {
       const item = allMenuItems.find(i => String(i.id) === String(id));
       if (!item) return;
@@ -172,6 +177,7 @@
       }
       window.open(`https://wa.me/917679695871?text=${encodeURIComponent(text)}`, '_blank');
     }
+
     async function loadLiveMenu() {
       try {
         const res = await fetch(CSV_URL);
@@ -181,17 +187,22 @@
         const container = document.getElementById('menu-container');
         container.innerHTML = '';
         const categories = [...new Set(allMenuItems.map(i => i.cat))];
+
         categories.forEach(cat => {
           const sec = document.createElement('section');
           sec.className = 'menu-section';
           sec.innerHTML = `<h2 class="section-title"><i class="fa-solid fa-utensils"></i> ${cat}</h2>`;
+          
           const grid = document.createElement('div');
           grid.className = 'food-grid';
+
+          let gridHtml = '';
           allMenuItems.filter(i => i.cat === cat).forEach(item => {
             const isAvail = item.status === 'YES';
             quantities[item.id] = 1;
             const unitPrice = extractNumericPrice(item.price);
-            grid.innerHTML += `
+            
+            gridHtml += `
               <div class="food-card ${!isAvail ? 'out-of-stock' : ''}">
                 <div class="food-img-wrap">
                   <span class="stock-badge ${isAvail ? 'badge-in' : 'badge-out'}">${isAvail ? 'Available' : 'আজকের মতো শেষ'}</span>
@@ -224,6 +235,8 @@
               </div>
             `;
           });
+          
+          grid.innerHTML = gridHtml;
           sec.appendChild(grid);
           container.appendChild(sec);
         });
