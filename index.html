@@ -62,7 +62,7 @@
     .main-order-btn:active { transform: scale(0.98); }
     .order-disabled { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); border-color: transparent; pointer-events: none; width: 100%; text-align: center; display: block; padding: 8px; border-radius: 8px; font-size: 13px; font-weight: 600; }
 
-    /* ভাসমান অর্ডার বার (Floating Bar) */
+    /* ভাসমান অর্ডার বার */
     .cart-float-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #18181b; border-top: 2px solid var(--primary); padding: 12px 18px; display: none; justify-content: space-between; align-items: center; z-index: 1000; box-shadow: 0 -5px 20px rgba(0,0,0,0.8); }
     .cart-float-info { display: flex; flex-direction: column; }
     .cart-float-count { font-size: 13px; color: #e4e4e7; font-weight: 600; }
@@ -170,8 +170,7 @@
 
   <script>
     const SHEET_ID = '1Lw0i9AKTLFzz8J7DRZgKXIEkosy-TtUr0vklIps9X4Y';
-    // ক্যাশ এড়ানোর জন্য টাইমস্ট্যাম্প যোগ করা হয়েছে
-    const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&t=${Date.now()}`;
+    const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
     
     let orderCart = [];
 
@@ -181,31 +180,13 @@
       return match ? parseInt(match[0], 10) : 0;
     }
 
-    function parseCSVLine(text) {
-      let p = '', c = false, r = [];
-      for (let i = 0; i < text.length; i++) {
-        let cc = text[i], nc = text[i+1];
-        if (cc === '"') {
-          if (c && nc === '"') { p += '"'; i++; }
-          else { c = !c; }
-        } else if (cc === ',' && !c) {
-          r.push(p);
-          p = '';
-        } else {
-          p += cc;
-        }
-      }
-      r.push(p);
-      return r;
-    }
-
     function parseCSV(text) {
       const lines = text.trim().split(/\r?\n/);
       const items = [];
       for (let i = 1; i < lines.length; i++) {
         const line = lines[i].trim();
         if (!line) continue;
-        const row = parseCSVLine(line).map(s => s.trim());
+        const row = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v => v.replace(/^"\vert{}"$/g, '').trim());
         if (row.length >= 6) {
           items.push({
             cat: row[1] || 'অন্যান্য',
@@ -358,4 +339,43 @@
             `;
 
             if (isAvail) {
-              const qtyDisplay = c
+              const qtyDisplay = card.querySelector('.item-qty-display');
+              const totalDisplay = card.querySelector('.item-total-display');
+              const btnMinus = card.querySelector('.btn-minus');
+              const btnPlus = card.querySelector('.btn-plus');
+              const btnOrder = card.querySelector('.btn-order');
+
+              btnMinus.addEventListener('click', () => {
+                if (currentQty > 1) {
+                  currentQty--;
+                  qtyDisplay.innerText = currentQty;
+                  if (unitPrice > 0) totalDisplay.innerText = `মোট: ₹${unitPrice * currentQty}`;
+                }
+              });
+
+              btnPlus.addEventListener('click', () => {
+                currentQty++;
+                qtyDisplay.innerText = currentQty;
+                if (unitPrice > 0) totalDisplay.innerText = `মোট: ₹${unitPrice * currentQty}`;
+              });
+
+              btnOrder.addEventListener('click', () => {
+                handleItemOrderClick(item.name, item.price, currentQty);
+              });
+            }
+
+            grid.appendChild(card);
+          });
+          
+          sec.appendChild(grid);
+          container.appendChild(sec);
+        });
+      } catch (err) {
+        document.getElementById('menu-container').innerHTML = '<div class="loading-box" style="color:#ef4444;">মেনু লোড হতে সমস্যা হয়েছে। গুগল শিট "Anyone with link" আছে কিনা দেখে নিন।</div>';
+      }
+    }
+
+    loadLiveMenu();
+  </script>
+</body>
+</html>
