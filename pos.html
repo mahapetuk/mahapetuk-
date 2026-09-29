@@ -35,7 +35,6 @@
     .btn-half-style { border-color: rgba(245, 158, 11, 0.4); background: #26201a; }
     .btn-half-tag { position: absolute; top: 8px; right: 8px; background: var(--primary); color: #000; border-radius: 4px; padding: 2px 6px; font-size: 10px; font-weight: 800; }
 
-    /* নিচের ফিক্সড প্যানেল */
     .bill-panel { position: fixed; bottom: 0; left: 0; width: 100%; background: #020617; border-top: 2px solid #334155; padding: 12px 16px; box-shadow: 0 -5px 25px rgba(0,0,0,0.8); z-index: 200; }
     .cart-summary { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
     .cart-items-preview { font-size: 13px; color: #94a3b8; max-width: 65%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
@@ -87,7 +86,6 @@
     const SHEET_ID = '1Lw0i9AKTLFzz8J7DRZgKXIEkosy-TtUr0vklIps9X4Y';
     const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
     
-    // গুগল ফর্ম অ্যাকশন ও ফিল্ড আইডি
     const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfXxLcbBllSYoxJmBuzkS1BOFtk5kK8m6BvW6lQGn7aVwHeMQ/formResponse';
     const ENTRY_ITEMS = 'entry.1932886441';
     const ENTRY_PAYMENT = 'entry.1217144855';
@@ -142,7 +140,6 @@
       container.innerHTML = '';
 
       items.forEach(item => {
-        // ফুল প্লেট বাটন
         const fullKey = item.name + ' (ফুল)';
         const fullFound = currentOrder.find(i => i.name === fullKey);
         const btnFull = document.createElement('div');
@@ -155,7 +152,6 @@
         btnFull.onclick = () => addToOrder(fullKey, item.pricing.full);
         container.appendChild(btnFull);
 
-        // হাফ প্লেট বাটন
         if (item.pricing.hasHalf) {
           const halfKey = item.name + ' (হাফ)';
           const halfFound = currentOrder.find(i => i.name === halfKey);
@@ -231,19 +227,16 @@
       const totalAmount = currentOrder.reduce((sum, i) => sum + (i.price * i.qty), 0);
       const itemsString = currentOrder.map(i => `${i.name} [${i.qty}টা]`).join(', ');
 
-      // গুগল ফর্মে পাঠানোর ডেটা প্রস্তুত
       const formData = new FormData();
       formData.append(ENTRY_ITEMS, itemsString);
       formData.append(ENTRY_PAYMENT, paymentMode);
       formData.append(ENTRY_AMOUNT, totalAmount);
 
-      // স্ক্রিন এক ক্লিকে পরিষ্কার ও রেডি
       currentOrder = [];
       updateUI();
       renderFoodButtons(getFilteredMenu());
       showToast();
 
-      // গুগল শিটে ব্যাকগ্রাউন্ডে সেভ
       fetch(FORM_URL, {
         method: 'POST',
         mode: 'no-cors',
