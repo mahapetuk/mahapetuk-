@@ -22,7 +22,7 @@
     /* Top Bar with Language Selector */
     .top-nav { display: flex; justify-content: space-between; align-items: center; background: #000; padding: 6px 15px; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .lang-switcher { display: inline-flex; background: #27272a; border-radius: 20px; padding: 2px; border: 1px solid #3f3f46; margin-left: auto; }
-    .lang-btn { background: none; border: none; color: #a1a1aa; padding: 4px 12px; font-size: 12px; font-weight: bold; border-radius: 16px; cursor: pointer; transition: 0.2s; }
+    .lang-btn { background: none; border: none; color: #a1a1aa; padding: 5px 14px; font-size: 13px; font-weight: bold; border-radius: 16px; cursor: pointer; transition: 0.2s; }
     .lang-btn.active { background: var(--primary); color: #000; }
 
     .announcement { background: linear-gradient(90deg, #b91c1c, #d97706); color: white; text-align: center; padding: 8px 12px; font-size: 13px; font-weight: 600; }
@@ -68,8 +68,11 @@
     .qty-count { font-size: 15px; font-weight: 700; color: #fff; min-width: 20px; text-align: center; }
     
     .food-bottom { border-top: 1px dashed rgba(255, 255, 255, 0.1); padding-top: 10px; }
-    .main-order-btn { width: 100%; background: var(--whatsapp); color: #ffffff; border: none; padding: 10px 12px; border-radius: 8px; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; transition: 0.2s; }
-    .main-order-btn:active { transform: scale(0.98); }
+    .btn-action-group { display: flex; gap: 8px; }
+    .btn-add-item { flex: 1; background: #3b82f6; color: #ffffff; border: none; padding: 10px 8px; border-radius: 8px; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 5px; cursor: pointer; transition: 0.2s; }
+    .btn-add-item:active { transform: scale(0.96); }
+    .main-order-btn { flex: 1.2; background: var(--whatsapp); color: #ffffff; border: none; padding: 10px 8px; border-radius: 8px; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 5px; cursor: pointer; transition: 0.2s; }
+    .main-order-btn:active { transform: scale(0.96); }
     .order-disabled { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); border-color: transparent; pointer-events: none; width: 100%; text-align: center; display: block; padding: 8px; border-radius: 8px; font-size: 13px; font-weight: 600; }
 
     /* ভাসমান কার্ট বার */
@@ -105,8 +108,9 @@
     .receipt-total { font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; margin-bottom: 14px; }
     .receipt-actions { display: flex; flex-direction: column; gap: 8px; }
     .btn-send-wa { background: #25d366; color: white; border: none; padding: 12px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
-    .btn-close-large { background: #ef4444; color: white; border: none; padding: 11px; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; text-align: center; }
-    .btn-print { background: #3b82f6; color: white; border: none; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; }
+    
+    .btn-add-more-inside { background: #3b82f6; color: white; border: none; padding: 11px; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .btn-add-more-inside:active { background: #1d4ed8; }
 
     .loading-box { text-align: center; padding: 40px 10px; color: var(--primary); font-size: 16px; font-weight: 600; }
     .site-footer { margin-top: 50px; padding: 30px 20px 20px; background: #18181b; border-top: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px 20px 0 0; text-align: center; }
@@ -115,19 +119,12 @@
     .footer-info p { display: flex; align-items: center; justify-content: center; gap: 8px; }
     .footer-info i { color: var(--primary); }
     .footer-info a { color: #fff; text-decoration: none; font-weight: 600; }
-
-    @media print {
-      body * { visibility: hidden; }
-      .receipt-box, .receipt-box * { visibility: visible; }
-      .receipt-box { position: absolute; left: 0; top: 0; width: 100%; border: none; }
-      .modal-close-icon, .item-card-actions, .receipt-actions { display: none; }
-    }
   </style>
 </head>
 <body>
   <!-- ভাষা পরিবর্তনের মেনুবার -->
   <div class="top-nav">
-    <div style="font-size:12px; color:#aaa;" id="navTag">Fast Food Center</div>
+    <div style="font-size:12px; color:#aaa;" id="navTag">ফাস্ট ফুড সেন্টার</div>
     <div class="lang-switcher">
       <button class="lang-btn active" id="btnLangBn" onclick="setLanguage('bn')">বাংলা</button>
       <button class="lang-btn" id="btnLangEn" onclick="setLanguage('en')">English</button>
@@ -193,6 +190,7 @@
   <!-- মেমো / বিল স্লিপ মোডাল -->
   <div class="modal-overlay" id="receiptModal">
     <div class="receipt-box">
+      <!-- ওপরে স্পষ্ট ক্রস বাটন -->
       <div class="receipt-top-bar">
         <span class="receipt-store-title" id="receiptStoreTitle">মহা পেটুক</span>
         <button class="modal-close-icon" id="modalTopCloseBtn" title="বন্ধ করুন">✕</button>
@@ -214,8 +212,7 @@
       
       <div class="receipt-actions">
         <button class="btn-send-wa" id="btnSendWhatsAppOrder"><i class="fa-brands fa-whatsapp"></i> <span id="waSendBtnText">WhatsApp-এ অর্ডার কনফার্ম করুন</span></button>
-        <button class="btn-close-large" id="modalBottomCloseBtn">❌ <span id="closeMemoBtnText">বন্ধ করুন ও আরও খাবার দেখুন</span></button>
-        <button class="btn-print" onclick="window.print()">🖨️ <span id="printBtnText">রসিদ প্রিন্ট করুন</span></button>
+        <button class="btn-add-more-inside" id="modalAddMoreBtn"><i class="fa-solid fa-plus"></i> <span id="addMoreInsideText">আরও খাবার যোগ করুন</span></button>
       </div>
     </div>
   </div>
@@ -228,7 +225,6 @@
     let rawMenuItems = [];
     let orderCart = [];
 
-    // বহুভাষিক শব্দকোষ (Dictionary)
     const translations = {
       bn: {
         navTag: "ফাস্ট ফুড সেন্টার",
@@ -243,7 +239,9 @@
         waBtn: "WhatsApp",
         loadingText: "লাইভ মেনু লোড হচ্ছে...",
         qtyLabel: "প্লেট সংখ্যা:",
-        orderBtn: "অর্ডার করুন",
+        addBtn: "যোগ করুন",
+        addedBtn: "যোগ হয়েছে!",
+        orderBtn: "অর্ডার ও বিল",
         outOfStock: "আজকের মতো শেষ",
         availBadge: "Available",
         footerTagline: "“পেটুক মনে শান্তি আনে মহা পেটুকের খাঁটি স্বাদ!”",
@@ -258,8 +256,7 @@
         receiptTotal: "সর্বমোট বিল:",
         receiptNotice: "⚠️ দোকানে এসে পার্সেল সংগ্রহ করতে হবে। ধন্যবাদ!",
         receiptWaBtn: "WhatsApp-এ অর্ডার কনফার্ম করুন",
-        receiptCloseBtn: "বন্ধ করুন ও আরও খাবার দেখুন",
-        receiptPrintBtn: "রসিদ প্রিন্ট করুন",
+        addMoreInsideText: "আরও খাবার যোগ করুন",
         priceLabel: "দাম:",
         platesLabel: "প্লেট",
         waGreeting: "নমস্কার, আমি মহা পেটুক থেকে নিচের খাবারগুলো অর্ডার করতে চাই:\n\n",
@@ -279,7 +276,9 @@
         waBtn: "WhatsApp",
         loadingText: "Loading live menu...",
         qtyLabel: "Quantity:",
-        orderBtn: "Order Now",
+        addBtn: "Add to Cart",
+        addedBtn: "Added!",
+        orderBtn: "Order & Bill",
         outOfStock: "Out of Stock",
         availBadge: "Available",
         footerTagline: "“Pure taste and complete satisfaction at Maha Petuk!”",
@@ -294,8 +293,7 @@
         receiptTotal: "Grand Total:",
         receiptNotice: "⚠️ Please collect your parcel from the counter. Thank you!",
         receiptWaBtn: "Confirm Order via WhatsApp",
-        receiptCloseBtn: "Close & Add More Items",
-        receiptPrintBtn: "Print Receipt",
+        addMoreInsideText: "Add More Items",
         priceLabel: "Price:",
         platesLabel: "Plate(s)",
         waGreeting: "Hello, I would like to order the following items from Maha Petuk:\n\n",
@@ -308,11 +306,9 @@
       currentLang = lang;
       localStorage.setItem('maha_lang', lang);
 
-      // বাটন কালার পরিবর্তন
       document.getElementById('btnLangBn').classList.toggle('active', lang === 'bn');
       document.getElementById('btnLangEn').classList.toggle('active', lang === 'en');
 
-      // টেক্সট অনুবাদ প্রয়োগ
       const t = translations[lang];
       document.getElementById('navTag').innerText = t.navTag;
       document.getElementById('topAnnouncement').innerHTML = t.topAnnouncement;
@@ -337,8 +333,7 @@
       document.getElementById('receiptTotalLabel').innerText = t.receiptTotal;
       document.getElementById('receiptNoticeText').innerText = t.receiptNotice;
       document.getElementById('waSendBtnText').innerText = t.receiptWaBtn;
-      document.getElementById('closeMemoBtnText').innerText = t.receiptCloseBtn;
-      document.getElementById('printBtnText').innerText = t.receiptPrintBtn;
+      document.getElementById('addMoreInsideText').innerText = t.addMoreInsideText;
 
       updateCartBar();
       if (rawMenuItems.length > 0) {
@@ -388,6 +383,16 @@
       } else {
         bar.style.display = 'none';
       }
+    }
+
+    function addItemToCart(name, priceStr, unitPrice, qty) {
+      const found = orderCart.find(i => i.name === name);
+      if (found) {
+        found.qty += qty;
+      } else {
+        orderCart.push({ name: name, priceStr: priceStr, unitPrice: unitPrice, qty: qty });
+      }
+      updateCartBar();
     }
 
     function renderModalItems() {
@@ -457,7 +462,7 @@
     }
 
     document.getElementById('modalTopCloseBtn').addEventListener('click', closeModal);
-    document.getElementById('modalBottomCloseBtn').addEventListener('click', closeModal);
+    document.getElementById('modalAddMoreBtn').addEventListener('click', closeModal);
     document.getElementById('openCartBarBtn').addEventListener('click', openModal);
 
     document.getElementById('receiptModal').addEventListener('click', function(e) {
@@ -532,7 +537,12 @@
               ` : ''}
               <div class="food-bottom">
                 ${isAvail 
-                  ? `<button class="main-order-btn btn-order" type="button"><i class="fa-brands fa-whatsapp"></i> ${t.orderBtn}</button>`
+                  ? `
+                    <div class="btn-action-group">
+                      <button class="btn-add-item btn-add" type="button"><i class="fa-solid fa-cart-plus"></i> ${t.addBtn}</button>
+                      <button class="main-order-btn btn-order" type="button"><i class="fa-brands fa-whatsapp"></i> ${t.orderBtn}</button>
+                    </div>
+                  `
                   : `<span class="order-disabled">${t.outOfStock}</span>`
                 }
               </div>
@@ -544,6 +554,7 @@
             const totalDisplay = card.querySelector('.item-total-display');
             const btnMinus = card.querySelector('.btn-minus');
             const btnPlus = card.querySelector('.btn-plus');
+            const btnAdd = card.querySelector('.btn-add');
             const btnOrder = card.querySelector('.btn-order');
 
             btnMinus.addEventListener('click', () => {
@@ -560,14 +571,18 @@
               if (unitPrice > 0) totalDisplay.innerText = `${t.cartTotalLabel} ₹${unitPrice * currentQty}`;
             });
 
+            btnAdd.addEventListener('click', () => {
+              addItemToCart(item.name, item.price, unitPrice, currentQty);
+              btnAdd.innerHTML = `<i class="fa-solid fa-check"></i> ${t.addedBtn}`;
+              btnAdd.style.background = '#10b981';
+              setTimeout(() => {
+                btnAdd.innerHTML = `<i class="fa-solid fa-cart-plus"></i> ${t.addBtn}`;
+                btnAdd.style.background = '#3b82f6';
+              }, 900);
+            });
+
             btnOrder.addEventListener('click', () => {
-              const found = orderCart.find(i => i.name === item.name);
-              if (found) {
-                found.qty += currentQty;
-              } else {
-                orderCart.push({ name: item.name, priceStr: item.price, unitPrice: unitPrice, qty: currentQty });
-              }
-              updateCartBar();
+              addItemToCart(item.name, item.price, unitPrice, currentQty);
               openModal();
             });
           }
