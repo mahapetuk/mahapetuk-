@@ -34,6 +34,10 @@
     .hero-desc { font-size: 14px; color: var(--text-muted); max-width: 500px; margin: 0 auto 16px; }
     
     .timing-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.35); padding: 6px 14px; border-radius: 25px; font-size: 13px; color: #fbbf24; font-weight: 700; margin-bottom: 10px; }
+    
+    /* দোকান বন্ধের ব্যানার */
+    .closed-banner { display: none; background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 10px 14px; border-radius: 10px; margin: 12px auto; max-width: 90%; text-align: center; font-size: 14px; font-weight: 700; }
+    
     .location-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1); padding: 6px 14px; border-radius: 25px; font-size: 13px; color: #e4e4e7; text-decoration: none; }
     .location-pill i { color: var(--accent); }
     
@@ -42,9 +46,21 @@
     .btn-call { background: var(--phone); }
     .btn-wa { background: var(--whatsapp); }
     
-    .container { max-width: 900px; margin: 0 auto; padding: 20px 15px; }
-    .menu-section { margin-top: 32px; }
-    .section-title { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; color: var(--primary); margin-bottom: 16px; border-bottom: 2px solid rgba(245, 158, 11, 0.25); padding-bottom: 8px; }
+    /* সার্চ বার ও ক্যাটাগরি বাটন */
+    .controls-wrap { max-width: 900px; margin: 15px auto 0; padding: 0 15px; }
+    .search-box-wrap { position: relative; margin-bottom: 12px; }
+    .search-input { width: 100%; padding: 12px 14px 12px 42px; background: #1c1c1e; border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; color: #fff; font-size: 15px; outline: none; transition: 0.2s; }
+    .search-input:focus { border-color: var(--primary); box-shadow: 0 0 8px rgba(245, 158, 11, 0.3); }
+    .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #71717a; font-size: 16px; }
+    
+    .category-pills-bar { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: none; }
+    .category-pills-bar::-webkit-scrollbar { display: none; }
+    .cat-pill { white-space: nowrap; padding: 7px 16px; border-radius: 20px; background: #27272a; border: 1px solid rgba(255,255,255,0.08); color: #d4d4d8; font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+    .cat-pill.active { background: var(--primary); color: #000; font-weight: 700; border-color: var(--primary); }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 10px 15px 20px; }
+    .menu-section { margin-top: 24px; }
+    .section-title { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 700; color: var(--primary); margin-bottom: 16px; border-bottom: 2px solid rgba(245, 158, 11, 0.25); padding-bottom: 8px; }
     .food-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 16px; }
     .food-card { background: var(--card-bg); border-radius: 14px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.06); display: flex; flex-direction: column; position: relative; }
     .food-img-wrap { position: relative; width: 100%; height: 180px; background: #232326; overflow: hidden; }
@@ -121,7 +137,6 @@
   </style>
 </head>
 <body>
-  <!-- ভাষা পরিবর্তনের মেনুবার -->
   <div class="top-nav">
     <div style="font-size:12px; color:#aaa;" id="navTag">ফাস্ট ফুড সেন্টার</div>
     <div class="lang-switcher">
@@ -153,6 +168,11 @@
       </a>
     </div>
 
+    <!-- দোকান CLOSE থাকলে নোটিশটি ভেসে উঠবে -->
+    <div id="closedNoticeBanner" class="closed-banner">
+      🔴 <strong>দোকান বন্ধ আছে (Closed)</strong> • এখন কোনো অর্ডার গ্রহণ করা হচ্ছে না।
+    </div>
+
     <div style="background: rgba(220, 38, 38, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 8px 14px; border-radius: 8px; margin: 12px auto; max-width: 90%; text-align: center; font-size: 13px; font-weight: 500;" id="deliveryNotice">
       ⚠️ <strong>হোম ডেলিভারি নেই</strong> • দোকানে এসে পার্সেল নিতে হবে 🛍️
     </div>
@@ -162,6 +182,15 @@
       <a href="https://wa.me/917679695871?text=নমস্কার,%20আমি%20মহা%20পেটুক%20থেকে%20খাবার%20অর্ডার%20করতে%20চাই।" target="_blank" class="btn-action btn-wa" id="btnWaAction"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
     </div>
   </header>
+
+  <!-- সার্চ বার ও ফিল্টার বাটনসমূহ (Chow, Roll ইত্যাদি) -->
+  <div class="controls-wrap">
+    <div class="search-box-wrap">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input type="text" class="search-input" id="menuSearchInput" placeholder="খাবারের নাম লিখে খুঁজুন (Search food)...">
+    </div>
+    <div class="category-pills-bar" id="categoryPillsContainer"></div>
+  </div>
 
   <main class="container" id="menu-container">
     <div class="loading-box" id="loadingText"><i class="fa-solid fa-spinner fa-spin"></i> লাইভ মেনু লোড হচ্ছে...</div>
@@ -186,7 +215,7 @@
     <button class="cart-float-btn" id="openCartBarBtn"><i class="fa-solid fa-receipt"></i> <span id="cartBarBtnText">মেমো দেখুন ও অর্ডার করুন</span></button>
   </div>
 
-  <!-- মেমো / বিল স্লিপ মোডাল -->
+  <!-- মেমো মোডাল -->
   <div class="modal-overlay" id="receiptModal">
     <div class="receipt-box">
       <div class="receipt-top-bar">
@@ -222,6 +251,9 @@
     let currentLang = localStorage.getItem('maha_lang') || 'bn';
     let rawMenuItems = [];
     let orderCart = [];
+    let isStoreOpen = true; 
+    let activeCategory = 'ALL';
+    let searchKeyword = '';
 
     const translations = {
       bn: {
@@ -242,6 +274,9 @@
         orderBtn: "অর্ডার ও বিল",
         outOfStock: "আজকের মতো শেষ",
         availBadge: "Available",
+        closedBadge: "Unavailable",
+        closedBannerText: "🔴 <strong>দোকান বন্ধ আছে (Closed)</strong> • এখন কোনো অর্ডার গ্রহণ করা হচ্ছে না।",
+        closedOrderBtnText: "দোকান বন্ধ (Closed)",
         footerTagline: "“পেটুক মনে শান্তি আনে মহা পেটুকের খাঁটি স্বাদ!”",
         footerTiming: "দোকান খোলার সময়: বিকেল ৪:০০ টা - রাত ১০:০০ টা",
         footerAddress: "ঠিকানা: আমতা সাহাপাড়া বাজার, হাওড়া",
@@ -258,6 +293,8 @@
         priceLabel: "দাম:",
         platesLabel: "প্লেট",
         halfLabel: "হাফ",
+        searchPlaceholder: "খাবারের নাম লিখে খুঁজুন (Search food)...",
+        allCatText: "সব খাবার",
         waGreeting: "নমস্কার, আমি মহা পেটুক থেকে নিচের খাবারগুলো অর্ডার করতে চাই:\n\n",
         waTotalText: "মোট প্রদেয় টাকা:",
         waPickupNotice: "⚠️ আমি দোকানে এসে পার্সেল সংগ্রহ করে নেব।"
@@ -280,6 +317,9 @@
         orderBtn: "Order & Bill",
         outOfStock: "Out of Stock",
         availBadge: "Available",
+        closedBadge: "Unavailable",
+        closedBannerText: "🔴 <strong>Store is Closed Now</strong> • Orders are not being accepted.",
+        closedOrderBtnText: "Store Closed",
         footerTagline: "“Pure taste and complete satisfaction at Maha Petuk!”",
         footerTiming: "Opening Hours: 4:00 PM - 10:00 PM",
         footerAddress: "Address: Amta Sahapara Bajar, Howrah",
@@ -296,49 +336,33 @@
         priceLabel: "Price:",
         platesLabel: "Plate(s)",
         halfLabel: "Half",
+        searchPlaceholder: "Search for food items...",
+        allCatText: "All Items",
         waGreeting: "Hello, I would like to order the following items from Maha Petuk:\n\n",
         waTotalText: "Total Amount:",
         waPickupNotice: "⚠️ I will pick up the parcel directly from the store."
       }
     };
 
-    // নির্দিষ্ট খাবার কিনা পরীক্ষা (চাউমিন এবং মাংস, এগ তড়কা, ভেজ তড়কা)
     function checkIfAllowsHalf(itemName) {
       const name = String(itemName).toLowerCase();
-      // চাউমিনের সব আইটেম
-      if (name.includes('চাউমিন') || name.includes('chow') || name.includes('chaumin') || name.includes('noodles')) {
-        return true;
-      }
-      // মাংস / চিকেন কষা
-      if (name.includes('মাংস') || name.includes('চিকেন কষা') || name.includes('chicken kasha') || name.includes('mangsho')) {
-        return true;
-      }
-      // এগ তড়কা
-      if (name.includes('এগ তড়কা') || name.includes('egg tarka') || name.includes('egg tadka')) {
-        return true;
-      }
-      // ভেজ তড়কা
-      if (name.includes('ভেজ তড়কা') || name.includes('veg tarka') || name.includes('veg tadka')) {
-        return true;
-      }
+      if (name.includes('চাউমিন') || name.includes('chow') || name.includes('chaumin') || name.includes('noodles')) return true;
+      if (name.includes('মাংস') || name.includes('চিকেন কষা') || name.includes('chicken kasha') || name.includes('mangsho')) return true;
+      if (name.includes('এগ তড়কা') || name.includes('egg tarka') || name.includes('egg tadka')) return true;
+      if (name.includes('ভেজ তড়কা') || name.includes('veg tarka') || name.includes('veg tadka')) return true;
       return false;
     }
 
-    // হাফ হলে অর্ধেকের সাথে ৫ টাকা বেশি হিসাব
     function parseItemPricing(priceStr, itemName) {
       const nums = (String(priceStr).match(/\d+/g) || []).map(Number);
       const allowsHalf = checkIfAllowsHalf(itemName);
 
       if (nums.length > 0) {
-        // একাধিক সংখ্যা থাকলে বড়টি ফুল প্লেটের দাম
         const fullPrice = Math.max(...nums);
         let halfPrice = 0;
-
         if (allowsHalf) {
-          // অর্ধেকের সাথে ৫ টাকা যোগ: Math.ceil(fullPrice / 2) + 5
           halfPrice = Math.ceil(fullPrice / 2) + 5;
         }
-
         return { full: fullPrice, half: halfPrice, hasHalf: allowsHalf };
       }
       return { full: 0, half: 0, hasHalf: false };
@@ -353,6 +377,18 @@
       const t = translations[lang];
       if (qty === 0.5) return t.halfLabel;
       return `${qty} ${t.platesLabel}`;
+    }
+
+    function updateStoreStatusUI() {
+      const banner = document.getElementById('closedNoticeBanner');
+      const t = translations[currentLang];
+
+      if (!isStoreOpen) {
+        banner.style.display = 'block';
+        banner.innerHTML = t.closedBannerText;
+      } else {
+        banner.style.display = 'none';
+      }
     }
 
     function setLanguage(lang) {
@@ -387,20 +423,35 @@
       document.getElementById('receiptNoticeText').innerText = t.receiptNotice;
       document.getElementById('waSendBtnText').innerText = t.receiptWaBtn;
       document.getElementById('addMoreInsideText').innerText = t.addMoreInsideText;
+      document.getElementById('menuSearchInput').placeholder = t.searchPlaceholder;
 
+      updateStoreStatusUI();
       updateCartBar();
       if (rawMenuItems.length > 0) {
-        renderMenuCards(rawMenuItems);
+        renderCategoryPills();
+        filterAndRenderMenu();
       }
     }
 
     function parseCSV(text) {
       const lines = text.trim().split(/\r?\n/);
       const items = [];
+      
+      // গুগল শিটের G2 সেল চেক করা (CLOSED / CLOSE / OFF থাকলে বন্ধ)
       for (let i = 1; i < lines.length; i++) {
         const line = lines[i].trim();
         if (!line) continue;
         const row = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v => v.replace(/^"\vert{}"$/g, '').trim());
+        
+        if (i === 1 && row.length >= 7 && row[6]) {
+          const statusVal = row[6].toUpperCase();
+          if (statusVal.includes('CLOSE') || statusVal.includes('OFF') || statusVal.includes('NO')) {
+            isStoreOpen = false;
+          } else {
+            isStoreOpen = true;
+          }
+        }
+
         if (row.length >= 6) {
           items.push({
             cat: row[1] || 'অন্যান্য',
@@ -414,6 +465,46 @@
       return items;
     }
 
+    function renderCategoryPills() {
+      const t = translations[currentLang];
+      const container = document.getElementById('categoryPillsContainer');
+      const categories = ['ALL', ...new Set(rawMenuItems.map(i => i.cat))];
+
+      container.innerHTML = categories.map(cat => {
+        const title = cat === 'ALL' ? t.allCatText : cat;
+        const isActive = cat === activeCategory ? 'active' : '';
+        return `<button class="cat-pill ${isActive}" onclick="selectCategory('${cat}')">${title}</button>`;
+      }).join('');
+    }
+
+    function selectCategory(cat) {
+      activeCategory = cat;
+      renderCategoryPills();
+      filterAndRenderMenu();
+    }
+
+    document.getElementById('menuSearchInput').addEventListener('input', (e) => {
+      searchKeyword = e.target.value.toLowerCase().trim();
+      filterAndRenderMenu();
+    });
+
+    function filterAndRenderMenu() {
+      let filtered = rawMenuItems;
+
+      if (activeCategory !== 'ALL') {
+        filtered = filtered.filter(i => i.cat === activeCategory);
+      }
+
+      if (searchKeyword) {
+        filtered = filtered.filter(i => 
+          i.name.toLowerCase().includes(searchKeyword) || 
+          i.cat.toLowerCase().includes(searchKeyword)
+        );
+      }
+
+      renderMenuCards(filtered);
+    }
+
     function updateCartBar() {
       const t = translations[currentLang];
       const bar = document.getElementById('cartFloatBar');
@@ -423,7 +514,7 @@
       const totalCount = orderCart.length;
       const grandTotal = orderCart.reduce((sum, item) => sum + calculateItemCost(item.qty, item.pricing), 0);
 
-      if (totalCount > 0) {
+      if (totalCount > 0 && isStoreOpen) {
         bar.style.display = 'flex';
         countText.innerText = `${totalCount} ${t.cartItemsCount}`;
         totalText.innerText = `${t.cartTotalLabel} ₹${grandTotal}`;
@@ -433,6 +524,7 @@
     }
 
     function addItemToCart(name, priceStr, pricing, qty) {
+      if (!isStoreOpen) return;
       const found = orderCart.find(i => i.name === name);
       if (found) {
         found.qty += qty;
@@ -477,7 +569,7 @@
           if (item.qty > 1) {
             item.qty--;
           } else if (item.qty === 1 && item.pricing.hasHalf) {
-            item.qty = 0.5; // নির্দিষ্ট আইটেমে ১ থেকে কমে হাফ হবে
+            item.qty = 0.5;
           } else {
             orderCart.splice(index, 1);
           }
@@ -507,7 +599,7 @@
     }
 
     function openModal() {
-      if (orderCart.length === 0) return;
+      if (orderCart.length === 0 || !isStoreOpen) return;
       renderModalItems();
       document.getElementById('receiptModal').style.display = 'flex';
     }
@@ -525,7 +617,7 @@
     });
 
     document.getElementById('btnSendWhatsAppOrder').addEventListener('click', function() {
-      if (orderCart.length === 0) return;
+      if (orderCart.length === 0 || !isStoreOpen) return;
       const t = translations[currentLang];
       let text = t.waGreeting;
       let totalAmount = 0;
@@ -547,11 +639,17 @@
       closeModal();
     });
 
-    function renderMenuCards(allMenuItems) {
+    function renderMenuCards(itemsToRender) {
       const t = translations[currentLang];
       const container = document.getElementById('menu-container');
       container.innerHTML = '';
-      const categories = [...new Set(allMenuItems.map(i => i.cat))];
+
+      if (itemsToRender.length === 0) {
+        container.innerHTML = `<div class="loading-box" style="color:#71717a;">কোনো খাবার খুঁজে পাওয়া যায়নি।</div>`;
+        return;
+      }
+
+      const categories = [...new Set(itemsToRender.map(i => i.cat))];
 
       categories.forEach(cat => {
         const sec = document.createElement('section');
@@ -561,8 +659,9 @@
         const grid = document.createElement('div');
         grid.className = 'food-grid';
 
-        allMenuItems.filter(i => i.cat === cat).forEach(item => {
-          const isAvail = item.status === 'YES';
+        itemsToRender.filter(i => i.cat === cat).forEach(item => {
+          // দোকান CLOSE থাকলে স্বয়ংক্রিয়ভাবে Unavailable হবে
+          const isAvail = (item.status === 'YES') && isStoreOpen;
           const pricing = parseItemPricing(item.price, item.name);
           let currentQty = 1;
 
@@ -571,7 +670,7 @@
 
           card.innerHTML = `
             <div class="food-img-wrap">
-              <span class="stock-badge ${isAvail ? 'badge-in' : 'badge-out'}">${isAvail ? t.availBadge : t.outOfStock}</span>
+              <span class="stock-badge ${isAvail ? 'badge-in' : 'badge-out'}">${!isStoreOpen ? t.closedBadge : (isAvail ? t.availBadge : t.outOfStock)}</span>
               <img src="${item.img}" class="food-img" alt="${item.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600'">
             </div>
             <div class="food-info">
@@ -598,7 +697,7 @@
                       <button class="main-order-btn btn-order" type="button"><i class="fa-brands fa-whatsapp"></i> ${t.orderBtn}</button>
                     </div>
                   `
-                  : `<span class="order-disabled">${t.outOfStock}</span>`
+                  : `<span class="order-disabled">${!isStoreOpen ? t.closedOrderBtnText : t.outOfStock}</span>`
                 }
               </div>
             </div>
@@ -622,10 +721,8 @@
               if (currentQty > 1) {
                 currentQty--;
               } else if (currentQty === 1 && pricing.hasHalf) {
-                // শুধুমাত্র নির্দিষ্ট খাবারগুলোর জন্য ১ থেকে কমে হাফ হবে
                 currentQty = 0.5;
               }
-              // বাকি খাবারে ১-এর নিচে আর কমবে না
               refreshDisplay();
             });
 
