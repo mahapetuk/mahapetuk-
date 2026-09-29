@@ -3,242 +3,288 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>মহা পেটুক | ডিজিটাল বিলিং কাউন্টার</title>
+  <title>মহা পেটুক POS</title>
+  <meta name="theme-color" content="#0f172a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     :root {
-      --bg: #0b1120;
+      --bg: #0f172a;
       --card: #1e293b;
-      --card-border: #334155;
+      --border: #334155;
       --primary: #f59e0b;
       --cash: #10b981;
       --upi: #3b82f6;
+      --danger: #ef4444;
       --text: #f8fafc;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { background: var(--bg); color: var(--text); padding-bottom: 160px; user-select: none; }
-    
-    header { background: #020617; padding: 12px 16px; border-bottom: 1px solid #1e293b; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
-    .header-title { font-size: 19px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 8px; }
-    .status-tag { font-size: 12px; color: #10b981; font-weight: 700; background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; padding: 3px 10px; border-radius: 20px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background: var(--bg); color: var(--text); padding-bottom: 175px; user-select: none; }
 
-    .search-bar { padding: 10px 16px; background: #0b1120; position: sticky; top: 51px; z-index: 90; }
-    .search-input { width: 100%; padding: 12px 16px; background: var(--card); border: 1px solid var(--card-border); border-radius: 12px; color: #fff; font-size: 15px; outline: none; }
-    .search-input:focus { border-color: var(--primary); }
-    
-    .food-list { padding: 10px 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
-    .food-btn { background: var(--card); border: 1px solid var(--card-border); border-radius: 14px; padding: 12px; text-align: left; cursor: pointer; transition: 0.1s; display: flex; flex-direction: column; justify-content: space-between; position: relative; min-height: 95px; }
-    .food-btn:active { transform: scale(0.96); background: #334155; border-color: var(--primary); }
-    .food-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
-    .food-icon { font-size: 18px; color: #94a3b8; }
-    .food-btn-title { font-size: 15px; font-weight: 700; color: #ffffff; line-height: 1.3; }
-    .food-btn-price { font-size: 16px; color: var(--primary); font-weight: 800; margin-top: 6px; }
-    .food-count-badge { position: absolute; top: -6px; right: -6px; background: #ef4444; color: #fff; font-size: 12px; font-weight: 800; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg); box-shadow: 0 2px 6px rgba(0,0,0,0.5); }
-    
-    .btn-half-style { border-color: rgba(245, 158, 11, 0.4); background: #26201a; }
-    .btn-half-tag { background: var(--primary); color: #000; border-radius: 4px; padding: 2px 6px; font-size: 10px; font-weight: 800; }
+    /* Header */
+    header { background: #020617; padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+    .header-title { font-size: 18px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+    .header-actions { display: flex; gap: 8px; }
+    .btn-top { background: #1e293b; border: 1px solid var(--border); color: #fff; padding: 6px 10px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; }
 
-    .bill-panel { position: fixed; bottom: 0; left: 0; width: 100%; background: #020617; border-top: 2px solid var(--card-border); padding: 12px 16px; box-shadow: 0 -5px 25px rgba(0,0,0,0.8); z-index: 200; }
-    .cart-summary { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .cart-items-preview { font-size: 13px; color: #94a3b8; max-width: 65%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
-    .cart-total-val { font-size: 26px; font-weight: 900; color: #facc15; }
+    /* Food Grid */
+    .food-container { padding: 12px 14px; display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+    .food-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 10px; display: flex; flex-direction: column; justify-content: space-between; min-height: 90px; cursor: pointer; position: relative; transition: 0.1s; }
+    .food-card:active { transform: scale(0.96); background: #334155; }
+    .card-half { background: #26201a; border-color: rgba(245, 158, 11, 0.4); }
+    .food-name { font-size: 14px; font-weight: 700; line-height: 1.2; margin-bottom: 6px; }
+    .food-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+    .food-price { font-size: 16px; font-weight: 800; color: var(--primary); }
+    .badge-half { font-size: 10px; font-weight: 800; background: var(--primary); color: #000; padding: 2px 6px; border-radius: 4px; }
+    .qty-badge { position: absolute; top: -6px; right: -6px; background: var(--danger); color: #fff; font-size: 12px; font-weight: 800; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg); }
 
-    .action-grid { display: grid; grid-template-columns: 1fr 1fr 48px; gap: 10px; }
-    .btn-pay { border: none; padding: 14px 10px; border-radius: 12px; font-size: 16px; font-weight: 800; color: white; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: 0.15s; }
-    .btn-pay:active { transform: scale(0.96); }
+    /* Bottom Billing Bar */
+    .billing-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #020617; border-top: 2px solid var(--border); padding: 12px 16px; z-index: 200; box-shadow: 0 -4px 20px rgba(0,0,0,0.8); }
+    .cart-summary { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .cart-items-text { font-size: 13px; color: #94a3b8; max-width: 65%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
+    .cart-total-price { font-size: 26px; font-weight: 900; color: #facc15; }
+
+    .action-row { display: grid; grid-template-columns: 1fr 1fr 48px; gap: 8px; }
+    .btn-pay { border: none; padding: 14px 10px; border-radius: 12px; font-size: 16px; font-weight: 800; color: white; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; }
+    .btn-pay:active { transform: scale(0.97); }
     .btn-cash { background: var(--cash); }
     .btn-upi { background: var(--upi); }
-    .btn-clear { background: #ef4444; color: white; border: none; border-radius: 12px; font-size: 20px; font-weight: bold; cursor: pointer; }
-    .btn-clear:active { background: #dc2626; }
+    .btn-reset { background: var(--danger); border: none; border-radius: 12px; color: #fff; font-size: 20px; font-weight: bold; cursor: pointer; }
 
-    .toast { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: #10b981; color: white; padding: 10px 22px; border-radius: 30px; font-size: 14px; font-weight: 800; display: none; z-index: 300; box-shadow: 0 5px 20px rgba(0,0,0,0.6); }
+    /* History Modal */
+    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 300; padding: 20px 14px; overflow-y: auto; }
+    .modal-box { background: #0f172a; border: 1px solid var(--border); border-radius: 14px; padding: 16px; max-width: 500px; margin: 0 auto; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .modal-title { font-size: 18px; font-weight: 800; color: var(--primary); }
+    .history-item { background: #1e293b; border-radius: 8px; padding: 10px; margin-bottom: 8px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; }
+    .toast { position: fixed; top: 60px; left: 50%; transform: translateX(-50%); background: var(--cash); color: white; padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 800; display: none; z-index: 400; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="header-title"><i class="fa-solid fa-utensils"></i> মহা পেটুক কাউন্টার</div>
-    <div class="status-tag">⚡ লাইভ ক্লাউড</div>
+    <div class="header-title"><i class="fa-solid fa-utensils"></i> মহা পেটুক</div>
+    <div class="header-actions">
+      <button class="btn-top" onclick="openHistory()"><i class="fa-solid fa-clock-rotate-left"></i> রিপোর্ট</button>
+      <button class="btn-top" onclick="exportToExcel()"><i class="fa-solid fa-file-excel"></i> ডাউনলোড</button>
+    </div>
   </header>
 
-  <div class="search-bar">
-    <input type="text" class="search-input" id="searchFood" placeholder="খাবারের নাম লিখে খুঁজুন...">
-  </div>
+  <main class="food-container" id="foodContainer"></main>
 
-  <main class="food-list" id="foodContainer"></main>
-
-  <div class="bill-panel">
+  <div class="billing-bar">
     <div class="cart-summary">
-      <div class="cart-items-preview" id="cartPreview">কোনো খাবার যোগ হয়নি</div>
-      <div class="cart-total-val" id="cartTotalDisplay">₹০</div>
+      <div class="cart-items-text" id="cartPreview">কোনো খাবার যোগ হয়নি</div>
+      <div class="cart-total-price" id="totalAmount">₹০</div>
     </div>
-    <div class="action-grid">
-      <button class="btn-pay btn-cash" id="btnCashSubmit" type="button"><i class="fa-solid fa-money-bill-wave"></i> ক্যাশ</button>
-      <button class="btn-pay btn-upi" id="btnUpiSubmit" type="button"><i class="fa-solid fa-qrcode"></i> অনলাইন</button>
-      <button class="btn-clear" id="btnClearCart" title="মুছে ফেলুন" type="button">✕</button>
+    <div class="action-row">
+      <button class="btn-pay btn-cash" onclick="processOrder('ক্যাশ')"><i class="fa-solid fa-money-bill-wave"></i> ক্যাশ</button>
+      <button class="btn-pay btn-upi" onclick="processOrder('অনলাইন')"><i class="fa-solid fa-qrcode"></i> অনলাইন</button>
+      <button class="btn-reset" onclick="resetCart()">✕</button>
     </div>
   </div>
 
-  <div class="toast" id="toastMsg">✅ রেকর্ড গুগল শিটে সেভ হয়েছে!</div>
+  <!-- হিস্ট্রি ও রিপোর্ট দেখার পপ-আপ -->
+  <div class="modal" id="historyModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">বিক্রির রিপোর্ট</div>
+        <button class="btn-top" onclick="closeHistory()">বন্ধ করুন ✕</button>
+      </div>
+      <div style="margin-bottom:12px; font-size:14px; color:#94a3b8;" id="todaySummary"></div>
+      <div id="historyList"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toastMsg">✅ বিক্রির হিসেব সেভ হয়েছে!</div>
 
   <script>
-    // আপনার তৈরি করা লাইভ গুগল অ্যাপস স্ক্রিপ্ট লিঙ্ক
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrlCsbFcdP230zjc6VPIHe3QwEeIHYi5QbtzTYSG5I0a8cN5Q9RoQlE_jBfe9ztTtg-A/exec';
-
-    // মহা পেটুকের মেনু ও ক্যাটাগরি আইকন তালিকা
+    // আপনার মেনুর তালিকা (এখানে সহজেই যেকোনো আইটেম ও দাম বদলানো যাবে)
     const menuData = [
-      { name: "ভেজ চাউমিন", icon: "fa-bowl-rice", pricing: { full: 50, half: 30, hasHalf: true } },
-      { name: "এগ চাউমিন", icon: "fa-egg", pricing: { full: 60, half: 35, hasHalf: true } },
-      { name: "এগ চিকেন চাউমিন", icon: "fa-bowl-rice", pricing: { full: 80, half: 45, hasHalf: true } },
-      { name: "এগ রোল", icon: "fa-bread-slice", pricing: { full: 40, half: 0, hasHalf: false } },
-      { name: "চিকেন রোল", icon: "fa-drumstick-bite", pricing: { full: 60, half: 0, hasHalf: false } },
-      { name: "ডাবল এগ চিকেন রোল", icon: "fa-drumstick-bite", pricing: { full: 70, half: 0, hasHalf: false } },
-      { name: "এগ তড়কা", icon: "fa-fire-burner", pricing: { full: 50, half: 30, hasHalf: true } },
-      { name: "ভেজ তড়কা", icon: "fa-leaf", pricing: { full: 40, half: 25, hasHalf: true } },
-      { name: "চিকেন কষা (মাংস)", icon: "fa-drumstick-bite", pricing: { full: 120, half: 65, hasHalf: true } },
-      { name: "চিকেন ললিপপ", icon: "fa-bowl-food", pricing: { full: 100, half: 0, hasHalf: false } },
-      { name: "চিকেন পকোড়া", icon: "fa-cookie-bite", pricing: { full: 80, half: 0, hasHalf: false } },
-      { name: "ছোট চিকেন পকোড়া", icon: "fa-cookie-bite", pricing: { full: 50, half: 0, hasHalf: false } },
-      { name: "পরোটা", icon: "fa-circle-dot", pricing: { full: 10, half: 0, hasHalf: false } },
-      { name: "রুটি", icon: "fa-circle", pricing: { full: 6, half: 0, hasHalf: false } }
+      { name: "ভেজ চাউমিন", full: 50, half: 30, hasHalf: true },
+      { name: "এগ চাউমিন", full: 60, half: 35, hasHalf: true },
+      { name: "এগ চিকেন চাউমিন", full: 80, half: 45, hasHalf: true },
+      { name: "এগ রোল", full: 40, half: 0, hasHalf: false },
+      { name: "চিকেন রোল", full: 60, half: 0, hasHalf: false },
+      { name: "ডাবল এগ চিকেন রোল", full: 70, half: 0, hasHalf: false },
+      { name: "এগ তড়কা", full: 50, half: 30, hasHalf: true },
+      { name: "ভেজ তড়কা", full: 40, half: 25, hasHalf: true },
+      { name: "চিকেন কষা", full: 120, half: 65, hasHalf: true },
+      { name: "চিকেন ললিপপ", full: 100, half: 0, hasHalf: false },
+      { name: "চিকেন পকোড়া", full: 80, half: 0, hasHalf: false },
+      { name: "পরোটা", full: 10, half: 0, hasHalf: false },
+      { name: "রুটি", full: 6, half: 0, hasHalf: false }
     ];
 
-    let currentOrder = [];
+    let currentCart = [];
+    let salesHistory = JSON.parse(localStorage.getItem('mp_sales_db') || '[]');
 
-    function renderFoodButtons(items) {
+    function renderMenu() {
       const container = document.getElementById('foodContainer');
       container.innerHTML = '';
 
-      items.forEach(item => {
-        // ফুল প্লেট বোতাম
-        const fullKey = item.name + ' (ফুল)';
-        const fullFound = currentOrder.find(i => i.name === fullKey);
-        const btnFull = document.createElement('div');
-        btnFull.className = 'food-btn';
-        btnFull.innerHTML = `
-          ${fullFound ? `<div class="food-count-badge">${fullFound.qty}</div>` : ''}
-          <div class="food-header">
-            <i class="fa-solid ${item.icon} food-icon"></i>
-          </div>
-          <div>
-            <div class="food-btn-title">${item.name}</div>
-            <div class="food-btn-price">₹${item.pricing.full}</div>
-          </div>
+      menuData.forEach(item => {
+        // ফুল প্লেট
+        const fullKey = item.name + (item.hasHalf ? ' (ফুল)' : '');
+        const fullInCart = currentCart.find(i => i.name === fullKey);
+        const cardFull = document.createElement('div');
+        cardFull.className = 'food-card';
+        cardFull.innerHTML = `
+          ${fullInCart ? `<div class="qty-badge">${fullInCart.qty}</div>` : ''}
+          <div class="food-name">${item.name}</div>
+          <div class="food-bottom"><div class="food-price">₹${item.full}</div></div>
         `;
-        btnFull.onclick = () => addToOrder(fullKey, item.pricing.full);
-        container.appendChild(btnFull);
+        cardFull.onclick = () => addItem(fullKey, item.full);
+        container.appendChild(cardFull);
 
-        // হাফ প্লেট বোতাম (প্রযোজ্য ক্ষেত্রে)
-        if (item.pricing.hasHalf) {
+        // হাফ প্লেট (যদি থাকে)
+        if (item.hasHalf) {
           const halfKey = item.name + ' (হাফ)';
-          const halfFound = currentOrder.find(i => i.name === halfKey);
-          const btnHalf = document.createElement('div');
-          btnHalf.className = 'food-btn btn-half-style';
-          btnHalf.innerHTML = `
-            ${halfFound ? `<div class="food-count-badge">${halfFound.qty}</div>` : ''}
-            <div class="food-header">
-              <i class="fa-solid ${item.icon} food-icon" style="color:var(--primary);"></i>
-              <span class="btn-half-tag">হাফ</span>
-            </div>
-            <div>
-              <div class="food-btn-title">${item.name}</div>
-              <div class="food-btn-price">₹${item.pricing.half}</div>
+          const halfInCart = currentCart.find(i => i.name === halfKey);
+          const cardHalf = document.createElement('div');
+          cardHalf.className = 'food-card card-half';
+          cardHalf.innerHTML = `
+            ${halfInCart ? `<div class="qty-badge">${halfInCart.qty}</div>` : ''}
+            <div class="food-name">${item.name}</div>
+            <div class="food-bottom">
+              <span class="badge-half">হাফ</span>
+              <div class="food-price">₹${item.half}</div>
             </div>
           `;
-          btnHalf.onclick = () => addToOrder(halfKey, item.pricing.half);
-          container.appendChild(btnHalf);
+          cardHalf.onclick = () => addItem(halfKey, item.half);
+          container.appendChild(cardHalf);
         }
       });
     }
 
-    function addToOrder(name, price) {
-      const found = currentOrder.find(i => i.name === name);
-      if (found) {
-        found.qty++;
-      } else {
-        currentOrder.push({ name, price, qty: 1 });
-      }
-      updateUI();
-      renderFoodButtons(getFilteredMenu());
+    function addItem(name, price) {
+      const found = currentCart.find(i => i.name === name);
+      if (found) found.qty++;
+      else currentCart.push({ name, price, qty: 1 });
+      updateCartUI();
+      renderMenu();
     }
 
-    function updateUI() {
-      const totalDisplay = document.getElementById('cartTotalDisplay');
+    function updateCartUI() {
       const preview = document.getElementById('cartPreview');
+      const totalDisplay = document.getElementById('totalAmount');
 
-      if (currentOrder.length === 0) {
+      if (currentCart.length === 0) {
         preview.innerText = 'কোনো খাবার যোগ হয়নি';
         totalDisplay.innerText = '₹০';
         return;
       }
 
-      let grandTotal = 0;
-      let textArr = [];
-
-      currentOrder.forEach(item => {
-        grandTotal += (item.price * item.qty);
-        textArr.push(`${item.name} x${item.qty}`);
+      let total = 0;
+      let textList = [];
+      currentCart.forEach(i => {
+        total += (i.price * i.qty);
+        textList.push(`${i.name} x${i.qty}`);
       });
 
-      totalDisplay.innerText = `₹${grandTotal}`;
-      preview.innerText = textArr.join(', ');
+      totalDisplay.innerText = `₹${total}`;
+      preview.innerText = textList.join(', ');
     }
 
-    document.getElementById('btnClearCart').onclick = () => {
-      currentOrder = [];
-      updateUI();
-      renderFoodButtons(getFilteredMenu());
-    };
-
-    function getFilteredMenu() {
-      const query = document.getElementById('searchFood').value.toLowerCase().trim();
-      if (!query) return menuData;
-      return menuData.filter(i => i.name.toLowerCase().includes(query));
+    function resetCart() {
+      currentCart = [];
+      updateCartUI();
+      renderMenu();
     }
 
-    document.getElementById('searchFood').oninput = () => {
-      renderFoodButtons(getFilteredMenu());
-    };
-
-    function submitOrder(paymentMode) {
-      if (currentOrder.length === 0) {
-        alert('আগে অন্তত একটি খাবার যোগ করুন!');
+    function processOrder(paymentType) {
+      if (currentCart.length === 0) {
+        alert('আগে অন্তত একটি খাবার সিলেক্ট করুন!');
         return;
       }
 
-      const totalAmount = currentOrder.reduce((sum, i) => sum + (i.price * i.qty), 0);
-      const itemsString = currentOrder.map(i => `${i.name} [${i.qty}টা]`).join(', ');
+      const total = currentCart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+      const itemsList = currentCart.map(i => `${i.name} [${i.qty}টি]`).join(', ');
 
-      const orderPayload = {
-        items: itemsString,
-        payment: paymentMode,
-        amount: totalAmount
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('en-GB');
+      const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+
+      const newRecord = {
+        date: dateStr,
+        time: timeStr,
+        items: itemsList,
+        payment: paymentType,
+        amount: total
       };
 
-      currentOrder = [];
-      updateUI();
-      renderFoodButtons(getFilteredMenu());
-      showToast();
+      // অফলাইন লোকাল মেমরিতে জমা
+      salesHistory.unshift(newRecord);
+      localStorage.setItem('mp_sales_db', JSON.stringify(salesHistory));
 
-      // সরাসরি গুগল শিটের অ্যাপস স্ক্রিপ্টে ডেটা পাঠানো
-      fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(orderPayload)
-      }).catch(err => console.error('Silent post log:', err));
+      resetCart();
+      showToast();
     }
 
     function showToast() {
       const t = document.getElementById('toastMsg');
       t.style.display = 'block';
-      setTimeout(() => { t.style.display = 'none'; }, 2200);
+      setTimeout(() => { t.style.display = 'none'; }, 2000);
     }
 
-    document.getElementById('btnCashSubmit').onclick = () => submitOrder('ক্যাশ (Cash)');
-    document.getElementById('btnUpiSubmit').onclick = () => submitOrder('অনলাইন (UPI)');
+    function openHistory() {
+      const modal = document.getElementById('historyModal');
+      const list = document.getElementById('historyList');
+      const summary = document.getElementById('todaySummary');
 
-    renderFoodButtons(menuData);
+      let todayTotal = 0;
+      let todayCash = 0;
+      let todayUPI = 0;
+      const todayDate = new Date().toLocaleDateString('en-GB');
+
+      salesHistory.forEach(r => {
+        if (r.date === todayDate) {
+          todayTotal += r.amount;
+          if (r.payment === 'ক্যাশ') todayCash += r.amount;
+          else todayUPI += r.amount;
+        }
+      });
+
+      summary.innerHTML = `<strong>আজকের মোট বিক্রি:</strong> ₹${todayTotal} <br>(ক্যাশ: ₹${todayCash} | অনলাইন: ₹${todayUPI})`;
+
+      list.innerHTML = salesHistory.slice(0, 50).map(r => `
+        <div class="history-item">
+          <div>
+            <div style="font-weight:700; color:#fff;">${r.items}</div>
+            <div style="font-size:11px; color:#94a3b8;">${r.date} | ${r.time} (${r.payment})</div>
+          </div>
+          <div style="font-size:16px; font-weight:800; color:var(--primary);">₹${r.amount}</div>
+        </div>
+      `).join('') || '<div style="color:#64748b; text-align:center;">এখনও কোনো এন্ট্রি নেই</div>';
+
+      modal.style.display = 'block';
+    }
+
+    function closeHistory() {
+      document.getElementById('historyModal').style.display = 'none';
+    }
+
+    // সরাসরি এক্সেল/CSV ফাইল ডাউনলোড
+    function exportToExcel() {
+      if (salesHistory.length === 0) {
+        alert('ডাউনলোড করার মতো কোনো এন্ট্রি নেই!');
+        return;
+      }
+
+      let csv = "\uFEFFতারিখ,সময়,খাবারের বিবরণ,পেমেন্ট,মোট টাকা\n";
+      salesHistory.forEach(r => {
+        csv += `"${r.date}","${r.time}","${r.items}","${r.payment}","${r.amount}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `Maha_Petuk_Sales_${new Date().toLocaleDateString('en-GB')}.csv`;
+      link.click();
+    }
+
+    renderMenu();
   </script>
 </body>
 </html>
