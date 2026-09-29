@@ -17,7 +17,7 @@
       --phone: #3b82f6;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Hind Siliguri', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.5; padding-bottom: 95px; }
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Hind Siliguri', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.5; padding-bottom: 110px; }
     
     .announcement { background: linear-gradient(90deg, #b91c1c, #d97706); color: white; text-align: center; padding: 8px 12px; font-size: 13px; font-weight: 600; }
     .top-banner-container { width: 100%; max-width: 900px; margin: 0 auto; padding: 12px 12px 0; }
@@ -57,9 +57,31 @@
     .qty-btn:active { background: var(--primary); color: #000; }
     .qty-count { font-size: 15px; font-weight: 700; color: #fff; min-width: 20px; text-align: center; }
     .food-bottom { border-top: 1px dashed rgba(255, 255, 255, 0.1); padding-top: 10px; }
-    .order-item-btn { width: 100%; background: var(--whatsapp); color: #ffffff; border: none; padding: 10px 12px; border-radius: 8px; font-size: 14px; font-weight: 700; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; transition: 0.2s; }
+    
+    .add-cart-btn { width: 100%; background: #3b82f6; color: #ffffff; border: none; padding: 10px 12px; border-radius: 8px; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; transition: 0.2s; }
+    .add-cart-btn:active { transform: scale(0.98); }
     .order-disabled { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); border-color: transparent; pointer-events: none; width: 100%; text-align: center; display: block; padding: 8px; border-radius: 8px; font-size: 13px; font-weight: 600; }
     
+    /* Cart Bar */
+    .cart-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #18181b; border-top: 2px solid var(--primary); padding: 12px 18px; display: none; justify-content: space-between; align-items: center; z-index: 1000; box-shadow: 0 -5px 20px rgba(0,0,0,0.7); }
+    .cart-info { display: flex; flex-direction: column; }
+    .cart-count { font-size: 13px; color: var(--text-muted); font-weight: 600; }
+    .cart-total { font-size: 18px; font-weight: 800; color: var(--primary); }
+    .cart-btn-open { background: var(--whatsapp); color: #fff; border: none; padding: 10px 16px; border-radius: 8px; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+
+    /* Modal / Bill Receipt */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 15px; }
+    .receipt-box { background: #ffffff; color: #000000; width: 100%; max-width: 360px; border-radius: 12px; padding: 20px; font-family: monospace, monospace; max-height: 90vh; overflow-y: auto; }
+    .receipt-header { text-align: center; border-bottom: 2px dashed #444; padding-bottom: 10px; margin-bottom: 12px; }
+    .receipt-header h2 { font-size: 22px; font-weight: 800; }
+    .receipt-items { width: 100%; border-bottom: 2px dashed #444; padding-bottom: 10px; margin-bottom: 12px; font-size: 13px; }
+    .receipt-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
+    .receipt-total { font-size: 16px; font-weight: bold; display: flex; justify-content: space-between; margin-bottom: 16px; }
+    .receipt-actions { display: flex; flex-direction: column; gap: 8px; font-family: sans-serif; }
+    .btn-send-wa { background: #25d366; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 15px; font-weight: bold; cursor: pointer; text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-print { background: #3b82f6; color: white; border: none; padding: 10px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; }
+    .btn-close-modal { background: #e5e7eb; color: #111; border: none; padding: 8px; border-radius: 6px; font-size: 13px; cursor: pointer; }
+
     .loading-box { text-align: center; padding: 40px 10px; color: var(--primary); font-size: 16px; font-weight: 600; }
     .site-footer { margin-top: 50px; padding: 30px 20px 20px; background: #18181b; border-top: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px 20px 0 0; text-align: center; }
     .footer-tagline { font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 12px; }
@@ -67,10 +89,13 @@
     .footer-info p { display: flex; align-items: center; justify-content: center; gap: 8px; }
     .footer-info i { color: var(--primary); }
     .footer-info a { color: #fff; text-decoration: none; font-weight: 600; }
-    .sticky-bottom-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(18, 18, 18, 0.95); backdrop-filter: blur(10px); border-top: 1px solid rgba(255, 255, 255, 0.12); padding: 10px 15px; display: flex; justify-content: center; gap: 12px; z-index: 999; }
-    .sticky-btn { flex: 1; max-width: 220px; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 14px; border-radius: 10px; font-size: 15px; font-weight: 700; text-decoration: none; color: #fff; }
-    .sticky-call { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
-    .sticky-whatsapp { background: linear-gradient(135deg, #10b981, #059669); }
+
+    @media print {
+      body * { visibility: hidden; }
+      .receipt-box, .receipt-box * { visibility: visible; }
+      .receipt-box { position: absolute; left: 0; top: 0; width: 100%; }
+      .receipt-actions { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -97,9 +122,11 @@
       <a href="https://wa.me/917679695871?text=নমস্কার,%20আমি%20মহা%20পেটুক%20থেকে%20খাবার%20অর্ডার%20করতে%20চাই।" target="_blank" class="btn-action btn-wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
     </div>
   </header>
+
   <main class="container" id="menu-container">
     <div class="loading-box"><i class="fa-solid fa-spinner fa-spin"></i> লাইভ মেনু লোড হচ্ছে...</div>
   </main>
+
   <footer class="site-footer">
     <div class="footer-tagline">“পেটুক মনে শান্তি আনে মহা পেটুকের খাঁটি স্বাদ!”</div>
     <div class="footer-info">
@@ -108,14 +135,43 @@
       <p><i class="fa-brands fa-whatsapp"></i> WhatsApp: <a href="https://wa.me/917679695871" target="_blank">76796 95871</a></p>
     </div>
   </footer>
-  <div class="sticky-bottom-bar">
-    <a href="tel:7679695871" class="sticky-btn sticky-call"><i class="fa-solid fa-phone"></i> Call Now</a>
-    <a href="https://wa.me/917679695871?text=নমস্কার,%20আমি%20খাবার%20অর্ডার%20করতে%20চাই" target="_blank" class="sticky-btn sticky-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+
+  <!-- Floating Cart Bar -->
+  <div class="cart-bar" id="cartBar">
+    <div class="cart-info">
+      <span class="cart-count" id="cartCount">০ টি আইটেম যোগ হয়েছে</span>
+      <span class="cart-total" id="cartTotalText">মোট: ₹০</span>
+    </div>
+    <button class="cart-btn-open" onclick="openReceipt()"><i class="fa-solid fa-bag-shopping"></i> অর্ডার ও বিল দেখুন</button>
+  </div>
+
+  <!-- Receipt / Bill Modal -->
+  <div class="modal-overlay" id="receiptModal">
+    <div class="receipt-box" id="printableReceipt">
+      <div class="receipt-header">
+        <h2>মহা পেটুক</h2>
+        <p>আমতা সাহাপাড়া বাজার, হাওড়া</p>
+        <p>ফোন: 76796 95871</p>
+        <p style="margin-top:6px; font-size:11px;" id="receiptDateTime"></p>
+      </div>
+      <div class="receipt-items" id="receiptList"></div>
+      <div class="receipt-total">
+        <span>সর্বমোট টাকা:</span>
+        <span id="receiptFinalTotal">₹০</span>
+      </div>
+      <p style="text-align:center; font-size:11px; margin-bottom:12px;">⚠️ দোকানে এসে পার্সেল সংগ্রহ করতে হবে। ধন্যবাদ!</p>
+      <div class="receipt-actions">
+        <button class="btn-send-wa" onclick="sendWhatsAppFinal()"><i class="fa-brands fa-whatsapp"></i> WhatsApp-এ অর্ডার পাঠান</button>
+        <button class="btn-print" onclick="window.print()"><i class="fa-solid fa-print"></i> মেমো প্রিন্ট / সেভ করুন</button>
+        <button class="btn-close-modal" onclick="closeReceipt()">আরও আইটেম যোগ করুন</button>
+      </div>
+    </div>
   </div>
 
   <script>
     const SHEET_ID = '1Lw0i9AKTLFzz8J7DRZgKXIEkosy-TtUr0vklIps9X4Y';
     const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
+    let cart = [];
 
     function extractNumericPrice(priceStr) {
       if (!priceStr) return 0;
@@ -123,7 +179,6 @@
       return match ? parseInt(match[0], 10) : 0;
     }
 
-    // CSV লাইনগুলো সঠিকভাবে আলাদা করার ফাংশন
     function parseCSVLine(text) {
       let p = '', c = false, r = [];
       for (let i = 0; i < text.length; i++) {
@@ -151,7 +206,7 @@
         const row = parseCSVLine(line).map(s => s.trim());
         if (row.length >= 6) {
           items.push({
-            uniqueIndex: i,
+            id: String(i),
             cat: row[1] || 'অন্যান্য',
             name: row[2] || 'খাবার',
             price: row[3] || '0',
@@ -161,6 +216,85 @@
         }
       }
       return items;
+    }
+
+    function updateCartBar() {
+      const bar = document.getElementById('cartBar');
+      const countElem = document.getElementById('cartCount');
+      const totalElem = document.getElementById('cartTotalText');
+      
+      const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+      const totalPrice = cart.reduce((sum, item) => sum + (item.unitPrice * item.qty), 0);
+
+      if (totalCount > 0) {
+        bar.style.display = 'flex';
+        countElem.innerText = `${totalCount} টি আইটেম যোগ করা হয়েছে`;
+        totalElem.innerText = `মোট: ₹${totalPrice}`;
+      } else {
+        bar.style.display = 'none';
+      }
+    }
+
+    function addToCart(name, priceStr, qty) {
+      const unit = extractNumericPrice(priceStr);
+      const existing = cart.find(i => i.name === name);
+      if (existing) {
+        existing.qty += qty;
+      } else {
+        cart.push({ name: name, priceStr: priceStr, unitPrice: unit, qty: qty });
+      }
+      updateCartBar();
+    }
+
+    function openReceipt() {
+      if (cart.length === 0) return;
+      const modal = document.getElementById('receiptModal');
+      const list = document.getElementById('receiptList');
+      const totalElem = document.getElementById('receiptFinalTotal');
+      const timeElem = document.getElementById('receiptDateTime');
+
+      const now = new Date();
+      timeElem.innerText = 'তারিখ: ' + now.toLocaleDateString('bn-IN') + ' | ' + now.toLocaleTimeString('bn-IN');
+
+      let html = '';
+      let grandTotal = 0;
+
+      cart.forEach(item => {
+        const itemTotal = item.unitPrice * item.qty;
+        grandTotal += itemTotal;
+        html += `
+          <div class="receipt-row">
+            <span>${item.name} x ${item.qty}</span>
+            <span>₹${itemTotal > 0 ? itemTotal : item.priceStr}</span>
+          </div>
+        `;
+      });
+
+      list.innerHTML = html;
+      totalElem.innerText = `₹${grandTotal}`;
+      modal.style.display = 'flex';
+    }
+
+    function closeReceipt() {
+      document.getElementById('receiptModal').style.display = 'none';
+    }
+
+    function sendWhatsAppFinal() {
+      if (cart.length === 0) return;
+      let text = 'নমস্কার, আমি মহা পেটুক থেকে নিচের খাবারগুলো অর্ডার করতে চাই:\n\n';
+      let grandTotal = 0;
+
+      cart.forEach((item, index) => {
+        const itemTotal = item.unitPrice * item.qty;
+        grandTotal += itemTotal;
+        text += `${index + 1}. ${item.name} - ${item.qty} প্লেট (₹${itemTotal > 0 ? itemTotal : item.priceStr})\n`;
+      });
+
+      text += `\n-----------------------\n`;
+      text += `সর্বমোট বিল: ₹${grandTotal}\n`;
+      text += `⚠️ আমি দোকানে এসে পার্সেল নিয়ে নেব।`;
+
+      window.open(`https://wa.me/917679695871?text=${encodeURIComponent(text)}`, '_blank');
     }
 
     async function loadLiveMenu() {
@@ -212,7 +346,7 @@
                 ` : ''}
                 <div class="food-bottom">
                   ${isAvail 
-                    ? `<button class="order-item-btn btn-order" type="button"><i class="fa-brands fa-whatsapp"></i> Order on WhatsApp</button>`
+                    ? `<button class="add-cart-btn btn-add" type="button"><i class="fa-solid fa-plus"></i> যোগ করুন (Add)</button>`
                     : `<span class="order-disabled">Out of Stock</span>`
                   }
                 </div>
@@ -224,46 +358,7 @@
               const totalDisplay = card.querySelector('.item-total-display');
               const btnMinus = card.querySelector('.btn-minus');
               const btnPlus = card.querySelector('.btn-plus');
-              const btnOrder = card.querySelector('.btn-order');
+              const btnAdd = card.querySelector('.btn-add');
 
               btnMinus.addEventListener('click', () => {
-                if (currentQty > 1) {
-                  currentQty--;
-                  qtyDisplay.innerText = currentQty;
-                  if (unitPrice > 0) totalDisplay.innerText = `মোট: ₹${unitPrice * currentQty}`;
-                }
-              });
-
-              btnPlus.addEventListener('click', () => {
-                currentQty++;
-                qtyDisplay.innerText = currentQty;
-                if (unitPrice > 0) totalDisplay.innerText = `মোট: ₹${unitPrice * currentQty}`;
-              });
-
-              btnOrder.addEventListener('click', () => {
-                let msg = '';
-                if (unitPrice > 0) {
-                  const total = unitPrice * currentQty;
-                  msg = `নমস্কার, আমি মহা পেটুক থেকে ${item.name} - ${currentQty} প্লেট (মোট দাম: ₹${total}) অর্ডার করতে চাই।`;
-                } else {
-                  msg = `নমস্কার, আমি মহা পেটুক থেকে ${item.name} (${item.price}) - ${currentQty} প্লেট অর্ডার করতে চাই।`;
-                }
-                window.open(`https://wa.me/917679695871?text=${encodeURIComponent(msg)}`, '_blank');
-              });
-            }
-
-            grid.appendChild(card);
-          });
-          
-          sec.appendChild(grid);
-          container.appendChild(sec);
-        });
-      } catch (err) {
-        document.getElementById('menu-container').innerHTML = '<div class="loading-box" style="color:#ef4444;">মেনু লোড হতে সমস্যা হয়েছে। গুগল শিট "Anyone with link" আছে কিনা দেখে নিন।</div>';
-      }
-    }
-
-    loadLiveMenu();
-  </script>
-</body>
-</html>
+                if (currentQt
