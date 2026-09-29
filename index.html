@@ -27,12 +27,16 @@
     .hero-title { font-size: 36px; font-weight: 800; color: #fff; margin-bottom: 4px; }
     .hero-sub { font-size: 17px; color: var(--primary); font-weight: 700; margin-bottom: 6px; }
     .hero-desc { font-size: 14px; color: var(--text-muted); max-width: 500px; margin: 0 auto 16px; }
+    
+    .timing-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.35); padding: 6px 14px; border-radius: 25px; font-size: 13px; color: #fbbf24; font-weight: 700; margin-bottom: 10px; }
     .location-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1); padding: 6px 14px; border-radius: 25px; font-size: 13px; color: #e4e4e7; text-decoration: none; }
     .location-pill i { color: var(--accent); }
+    
     .hero-actions { display: flex; justify-content: center; gap: 12px; margin-top: 18px; flex-wrap: wrap; }
     .btn-action { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 10px; font-size: 14px; font-weight: 700; text-decoration: none; color: white; }
     .btn-call { background: var(--phone); }
     .btn-wa { background: var(--whatsapp); }
+    
     .container { max-width: 900px; margin: 0 auto; padding: 20px 15px; }
     .menu-section { margin-top: 32px; }
     .section-title { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; color: var(--primary); margin-bottom: 16px; border-bottom: 2px solid rgba(245, 158, 11, 0.25); padding-bottom: 8px; }
@@ -109,10 +113,17 @@
     <div class="hero-sub">Maha Petuk Fast Food Center</div>
     <p class="hero-desc">ভালো খাবার ভালো মুড! খাবার মানে আনন্দ।</p>
     
-    <a href="https://maps.google.com/?q=Amta+Sahapara+Bajar" target="_blank" class="location-pill">
-      <i class="fa-solid fa-location-dot"></i>
-      <span>আমতা সাহাপাড়া বাজার (Amta Sahapara Bajar)</span>
-    </a>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+      <div class="timing-pill">
+        <i class="fa-solid fa-clock"></i>
+        <span>সময়: বিকেল ৪:০০ টা - রাত ১০:০০ টা</span>
+      </div>
+      <a href="https://maps.google.com/?q=Amta+Sahapara+Bajar" target="_blank" class="location-pill">
+        <i class="fa-solid fa-location-dot"></i>
+        <span>আমতা সাহাপাড়া বাজার (Amta Sahapara Bajar)</span>
+      </a>
+    </div>
+
     <div style="background: rgba(220, 38, 38, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 8px 14px; border-radius: 8px; margin: 12px auto; max-width: 90%; text-align: center; font-size: 13px; font-weight: 500;">
       ⚠️ <strong>হোম ডেলিভারি নেই</strong> • দোকানে এসে পার্সেল নিতে হবে 🛍️
     </div>
@@ -130,6 +141,7 @@
   <footer class="site-footer">
     <div class="footer-tagline">“পেটুক মনে শান্তি আনে মহা পেটুকের খাঁটি স্বাদ!”</div>
     <div class="footer-info">
+      <p><i class="fa-solid fa-clock"></i> দোকান খোলার সময়: বিকেল ৪:০০ টা - রাত ১০:০০ টা</p>
       <p><i class="fa-solid fa-location-dot"></i> ঠিকানা: আমতা সাহাপাড়া বাজার, হাওড়া</p>
       <p><i class="fa-solid fa-phone"></i> ফোন: <a href="tel:7679695871">76796 95871</a></p>
       <p><i class="fa-brands fa-whatsapp"></i> WhatsApp: <a href="https://wa.me/917679695871" target="_blank">76796 95871</a></p>
@@ -151,6 +163,7 @@
       <div class="receipt-header">
         <h2>মহা পেটুক</h2>
         <p>আমতা সাহাপাড়া বাজার, হাওড়া</p>
+        <p>সময়: বিকেল ৪:০০ টা - রাত ১০:০০ টা</p>
         <p>ফোন: 76796 95871</p>
         <p style="margin-top:6px; font-size:11px;" id="receiptDateTime"></p>
       </div>
