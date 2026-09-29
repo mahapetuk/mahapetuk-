@@ -25,7 +25,7 @@
     .search-input { width: 100%; padding: 11px 14px; background: var(--card); border: 1px solid #334155; border-radius: 10px; color: #fff; font-size: 15px; outline: none; }
     .search-input:focus { border-color: var(--primary); }
     
-    .food-list { padding: 10px 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+    .food-list { padding: 10px 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
     .food-btn { background: var(--card); border: 1px solid #334155; border-radius: 12px; padding: 12px; text-align: left; cursor: pointer; transition: 0.1s; display: flex; flex-direction: column; justify-content: space-between; position: relative; min-height: 85px; }
     .food-btn:active { transform: scale(0.96); background: #334155; border-color: var(--primary); }
     .food-btn-title { font-size: 15px; font-weight: 700; color: #ffffff; line-height: 1.3; }
@@ -64,9 +64,7 @@
     <input type="text" class="search-input" id="searchFood" placeholder="খাবারের নাম লিখে খুঁজুন...">
   </div>
 
-  <main class="food-list" id="foodContainer">
-    <div style="grid-column: 1/-1; text-align:center; padding:30px; color:#94a3b8;">মেনু লোড হচ্ছে...</div>
-  </main>
+  <main class="food-list" id="foodContainer"></main>
 
   <div class="bill-panel">
     <div class="cart-summary">
@@ -83,63 +81,38 @@
   <div class="toast" id="toastMsg">✅ রেকর্ড গুগল শিটে জমা হয়েছে!</div>
 
   <script>
-    const SHEET_ID = '1Lw0i9AKTLFzz8J7DRZgKXIEkosy-TtUr0vklIps9X4Y';
-    const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
-    
+    // গুগল ফর্ম অ্যাকশন
     const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfXxLcbBllSYoxJmBuzkS1BOFtk5kK8m6BvW6lQGn7aVwHeMQ/formResponse';
     const ENTRY_ITEMS = 'entry.1932886441';
     const ENTRY_PAYMENT = 'entry.1217144855';
     const ENTRY_AMOUNT = 'entry.779306446';
 
+    // মহা পেটুকের খাবারের তালিকা (ফুল ও হাফ প্লেটের হিসেবসহ)
+    const menuData = [
+      { name: "ভেজ চাউমিন", pricing: { full: 50, half: 30, hasHalf: true } },
+      { name: "এগ চাউমিন", pricing: { full: 60, half: 35, hasHalf: true } },
+      { name: "এগ চিকেন চাউমিন", pricing: { full: 80, half: 45, hasHalf: true } },
+      { name: "এগ রোল", pricing: { full: 40, half: 0, hasHalf: false } },
+      { name: "চিকেন রোল", pricing: { full: 60, half: 0, hasHalf: false } },
+      { name: "ডাবল এগ চিকেন রোল", pricing: { full: 70, half: 0, hasHalf: false } },
+      { name: "এগ তড়কা", pricing: { full: 50, half: 30, hasHalf: true } },
+      { name: "ভেজ তড়কা", pricing: { full: 40, half: 25, hasHalf: true } },
+      { name: "চিকেন কষা (মাংস)", pricing: { full: 120, half: 65, hasHalf: true } },
+      { name: "চিকেন ললিপপ", pricing: { full: 100, half: 0, hasHalf: false } },
+      { name: "চিকেন পকোড়া", pricing: { full: 80, half: 0, hasHalf: false } },
+      { name: "ছোট চিকেন পকোড়া", pricing: { full: 50, half: 0, hasHalf: false } },
+      { name: "পরোটা", pricing: { full: 10, half: 0, hasHalf: false } },
+      { name: "রুটি", pricing: { full: 6, half: 0, hasHalf: false } }
+    ];
+
     let currentOrder = [];
-    let menuData = [];
-
-    function checkIfAllowsHalf(itemName) {
-      const name = String(itemName).toLowerCase();
-      return name.includes('চাউমিন') || name.includes('chow') || name.includes('chaumin') ||
-             name.includes('মাংস') || name.includes('চিকেন কষা') || name.includes('chicken kasha') ||
-             name.includes('এগ তড়কা') || name.includes('egg tarka') || 
-             name.includes('ভেজ তড়কা') || name.includes('veg tarka');
-    }
-
-    function parseItemPrice(priceStr, itemName) {
-      const nums = (String(priceStr).match(/\d+/g) || []).map(Number);
-      if (nums.length > 0) {
-        const fullPrice = Math.max(...nums);
-        const allowsHalf = checkIfAllowsHalf(itemName);
-        const halfPrice = allowsHalf ? (Math.ceil(fullPrice / 2) + 5) : 0;
-        return { full: fullPrice, half: halfPrice, hasHalf: allowsHalf };
-      }
-      return { full: 0, half: 0, hasHalf: false };
-    }
-
-    async function loadMenu() {
-      try {
-        const res = await fetch(CSV_URL);
-        const text = await res.text();
-        const lines = text.trim().split(/\r?\n/);
-        menuData = [];
-
-        for (let i = 1; i < lines.length; i++) {
-          const row = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v => v.replace(/^"\vert{}"$/g, '').trim());
-          if (row.length >= 4) {
-            const name = row[2];
-            const price = row[3];
-            const pricing = parseItemPrice(price, name);
-            menuData.push({ name, price, pricing });
-          }
-        }
-        renderFoodButtons(menuData);
-      } catch (err) {
-        document.getElementById('foodContainer').innerHTML = '<div style="color:#ef4444; text-align:center; grid-column:1/-1;">মেনু লোড হতে সমস্যা হয়েছে।</div>';
-      }
-    }
 
     function renderFoodButtons(items) {
       const container = document.getElementById('foodContainer');
       container.innerHTML = '';
 
       items.forEach(item => {
+        // ফুল প্লেট
         const fullKey = item.name + ' (ফুল)';
         const fullFound = currentOrder.find(i => i.name === fullKey);
         const btnFull = document.createElement('div');
@@ -152,6 +125,7 @@
         btnFull.onclick = () => addToOrder(fullKey, item.pricing.full);
         container.appendChild(btnFull);
 
+        // হাফ প্লেট
         if (item.pricing.hasHalf) {
           const halfKey = item.name + ' (হাফ)';
           const halfFound = currentOrder.find(i => i.name === halfKey);
@@ -237,6 +211,7 @@
       renderFoodButtons(getFilteredMenu());
       showToast();
 
+      // সরাসরি গুগল শিটে সেভ হবে
       fetch(FORM_URL, {
         method: 'POST',
         mode: 'no-cors',
@@ -253,7 +228,8 @@
     document.getElementById('btnCashSubmit').onclick = () => submitOrder('Cash');
     document.getElementById('btnUpiSubmit').onclick = () => submitOrder('Online (UPI)');
 
-    loadMenu();
+    // সরাসরি মেনু বাটন দেখানো শুরু
+    renderFoodButtons(menuData);
   </script>
 </body>
 </html>
