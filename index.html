@@ -19,7 +19,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Hind Siliguri', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.5; padding-bottom: 120px; }
     
-    /* Top Bar with Language Selector */
     .top-nav { display: flex; justify-content: space-between; align-items: center; background: #000; padding: 6px 15px; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .lang-switcher { display: inline-flex; background: #27272a; border-radius: 20px; padding: 2px; border: 1px solid #3f3f46; margin-left: auto; }
     .lang-btn { background: none; border: none; color: #a1a1aa; padding: 5px 14px; font-size: 13px; font-weight: bold; border-radius: 16px; cursor: pointer; transition: 0.2s; }
@@ -58,14 +57,14 @@
     .name-bn { font-size: 17px; font-weight: 700; color: #ffffff; margin-bottom: 6px; }
     
     .food-price-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-    .food-price { font-size: 16px; font-weight: 800; color: var(--primary); }
-    .total-price-text { font-size: 13px; color: var(--text-muted); font-weight: 600; }
+    .food-price { font-size: 15px; font-weight: 800; color: var(--primary); }
+    .total-price-text { font-size: 14px; color: #facc15; font-weight: 700; }
     .qty-control-wrap { display: flex; align-items: center; justify-content: space-between; background: rgba(255, 255, 255, 0.05); padding: 6px 10px; border-radius: 8px; margin-bottom: 12px; border: 1px solid rgba(255, 255, 255, 0.08); }
     .qty-label { font-size: 13px; color: #ddd; font-weight: 600; }
     .qty-btn-group { display: flex; align-items: center; gap: 8px; }
     .qty-btn { width: 28px; height: 28px; background: #2a2a2e; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 6px; color: #fff; font-size: 16px; font-weight: bold; display: flex; align-items: center; justify-content: center; cursor: pointer; user-select: none; }
     .qty-btn:active { background: var(--primary); color: #000; }
-    .qty-count { font-size: 15px; font-weight: 700; color: #fff; min-width: 20px; text-align: center; }
+    .qty-count { font-size: 14px; font-weight: 700; color: #fff; min-width: 48px; text-align: center; }
     
     .food-bottom { border-top: 1px dashed rgba(255, 255, 255, 0.1); padding-top: 10px; }
     .btn-action-group { display: flex; gap: 8px; }
@@ -82,7 +81,7 @@
     .cart-float-total { font-size: 18px; font-weight: 800; color: var(--primary); }
     .cart-float-btn { background: var(--whatsapp); color: #fff; border: none; padding: 10px 16px; border-radius: 8px; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 8px; cursor: pointer; }
 
-    /* পপ-আপ মেমো / রসিদ মোডাল */
+    /* পপ-আপ মেমো */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 15px; }
     .receipt-box { background: #ffffff; color: #111111; width: 100%; max-width: 400px; border-radius: 14px; padding: 18px; font-family: system-ui, -apple-system, sans-serif; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
     
@@ -103,7 +102,7 @@
     .btn-pop-minus:active { background: #dc2626; color: #fff; }
     .btn-pop-plus { width: 32px; height: 32px; background: #e0f2fe; border: 1px solid #7dd3fc; color: #0284c7; border-radius: 6px; font-weight: 900; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
     .btn-pop-plus:active { background: #0284c7; color: #fff; }
-    .item-pop-qty { font-weight: 800; font-size: 15px; min-width: 22px; text-align: center; color: #000; }
+    .item-pop-qty { font-weight: 800; font-size: 14px; min-width: 44px; text-align: center; color: #000; }
 
     .receipt-total { font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; margin-bottom: 14px; }
     .receipt-actions { display: flex; flex-direction: column; gap: 8px; }
@@ -190,7 +189,6 @@
   <!-- মেমো / বিল স্লিপ মোডাল -->
   <div class="modal-overlay" id="receiptModal">
     <div class="receipt-box">
-      <!-- ওপরে স্পষ্ট ক্রস বাটন -->
       <div class="receipt-top-bar">
         <span class="receipt-store-title" id="receiptStoreTitle">মহা পেটুক</span>
         <button class="modal-close-icon" id="modalTopCloseBtn" title="বন্ধ করুন">✕</button>
@@ -259,6 +257,7 @@
         addMoreInsideText: "আরও খাবার যোগ করুন",
         priceLabel: "দাম:",
         platesLabel: "প্লেট",
+        halfLabel: "হাফ",
         waGreeting: "নমস্কার, আমি মহা পেটুক থেকে নিচের খাবারগুলো অর্ডার করতে চাই:\n\n",
         waTotalText: "মোট প্রদেয় টাকা:",
         waPickupNotice: "⚠️ আমি দোকানে এসে পার্সেল সংগ্রহ করে নেব।"
@@ -296,11 +295,65 @@
         addMoreInsideText: "Add More Items",
         priceLabel: "Price:",
         platesLabel: "Plate(s)",
+        halfLabel: "Half",
         waGreeting: "Hello, I would like to order the following items from Maha Petuk:\n\n",
         waTotalText: "Total Amount:",
         waPickupNotice: "⚠️ I will pick up the parcel directly from the store."
       }
     };
+
+    // নির্দিষ্ট খাবার কিনা পরীক্ষা (চাউমিন এবং মাংস, এগ তড়কা, ভেজ তড়কা)
+    function checkIfAllowsHalf(itemName) {
+      const name = String(itemName).toLowerCase();
+      // চাউমিনের সব আইটেম
+      if (name.includes('চাউমিন') || name.includes('chow') || name.includes('chaumin') || name.includes('noodles')) {
+        return true;
+      }
+      // মাংস / চিকেন কষা
+      if (name.includes('মাংস') || name.includes('চিকেন কষা') || name.includes('chicken kasha') || name.includes('mangsho')) {
+        return true;
+      }
+      // এগ তড়কা
+      if (name.includes('এগ তড়কা') || name.includes('egg tarka') || name.includes('egg tadka')) {
+        return true;
+      }
+      // ভেজ তড়কা
+      if (name.includes('ভেজ তড়কা') || name.includes('veg tarka') || name.includes('veg tadka')) {
+        return true;
+      }
+      return false;
+    }
+
+    // হাফ হলে অর্ধেকের সাথে ৫ টাকা বেশি হিসাব
+    function parseItemPricing(priceStr, itemName) {
+      const nums = (String(priceStr).match(/\d+/g) || []).map(Number);
+      const allowsHalf = checkIfAllowsHalf(itemName);
+
+      if (nums.length > 0) {
+        // একাধিক সংখ্যা থাকলে বড়টি ফুল প্লেটের দাম
+        const fullPrice = Math.max(...nums);
+        let halfPrice = 0;
+
+        if (allowsHalf) {
+          // অর্ধেকের সাথে ৫ টাকা যোগ: Math.ceil(fullPrice / 2) + 5
+          halfPrice = Math.ceil(fullPrice / 2) + 5;
+        }
+
+        return { full: fullPrice, half: halfPrice, hasHalf: allowsHalf };
+      }
+      return { full: 0, half: 0, hasHalf: false };
+    }
+
+    function calculateItemCost(qty, pricing) {
+      if (qty === 0.5) return pricing.half;
+      return qty * pricing.full;
+    }
+
+    function formatQtyDisplay(qty, lang) {
+      const t = translations[lang];
+      if (qty === 0.5) return t.halfLabel;
+      return `${qty} ${t.platesLabel}`;
+    }
 
     function setLanguage(lang) {
       currentLang = lang;
@@ -341,12 +394,6 @@
       }
     }
 
-    function extractNumericPrice(priceStr) {
-      if (!priceStr) return 0;
-      const match = String(priceStr).match(/\d+/);
-      return match ? parseInt(match[0], 10) : 0;
-    }
-
     function parseCSV(text) {
       const lines = text.trim().split(/\r?\n/);
       const items = [];
@@ -373,24 +420,24 @@
       const countText = document.getElementById('cartFloatCount');
       const totalText = document.getElementById('cartFloatTotal');
       
-      const totalItems = orderCart.reduce((sum, item) => sum + item.qty, 0);
-      const grandTotal = orderCart.reduce((sum, item) => sum + (item.unitPrice * item.qty), 0);
+      const totalCount = orderCart.length;
+      const grandTotal = orderCart.reduce((sum, item) => sum + calculateItemCost(item.qty, item.pricing), 0);
 
-      if (totalItems > 0) {
+      if (totalCount > 0) {
         bar.style.display = 'flex';
-        countText.innerText = `${totalItems} ${t.cartItemsCount}`;
+        countText.innerText = `${totalCount} ${t.cartItemsCount}`;
         totalText.innerText = `${t.cartTotalLabel} ₹${grandTotal}`;
       } else {
         bar.style.display = 'none';
       }
     }
 
-    function addItemToCart(name, priceStr, unitPrice, qty) {
+    function addItemToCart(name, priceStr, pricing, qty) {
       const found = orderCart.find(i => i.name === name);
       if (found) {
         found.qty += qty;
       } else {
-        orderCart.push({ name: name, priceStr: priceStr, unitPrice: unitPrice, qty: qty });
+        orderCart.push({ name: name, priceStr: priceStr, pricing: pricing, qty: qty });
       }
       updateCartBar();
     }
@@ -408,7 +455,7 @@
       let grandTotal = 0;
 
       orderCart.forEach((item, index) => {
-        const lineTotal = item.unitPrice * item.qty;
+        const lineTotal = calculateItemCost(item.qty, item.pricing);
         grandTotal += lineTotal;
 
         const row = document.createElement('div');
@@ -417,20 +464,24 @@
         row.innerHTML = `
           <div>
             <div class="item-card-name">${item.name}</div>
-            <div class="item-card-sub">${t.priceLabel} ₹${lineTotal > 0 ? lineTotal : item.priceStr} (${item.qty} ${t.platesLabel})</div>
+            <div class="item-card-sub">${t.priceLabel} ₹${lineTotal} (${formatQtyDisplay(item.qty, currentLang)})</div>
           </div>
           <div class="item-card-actions">
             <button class="btn-pop-minus" type="button" title="Minus">-</button>
-            <span class="item-pop-qty">${item.qty}</span>
+            <span class="item-pop-qty">${item.qty === 0.5 ? t.halfLabel : item.qty}</span>
             <button class="btn-pop-plus" type="button" title="Plus">+</button>
           </div>
         `;
 
         row.querySelector('.btn-pop-minus').addEventListener('click', () => {
-          item.qty--;
-          if (item.qty <= 0) {
+          if (item.qty > 1) {
+            item.qty--;
+          } else if (item.qty === 1 && item.pricing.hasHalf) {
+            item.qty = 0.5; // নির্দিষ্ট আইটেমে ১ থেকে কমে হাফ হবে
+          } else {
             orderCart.splice(index, 1);
           }
+
           updateCartBar();
           if (orderCart.length === 0) {
             closeModal();
@@ -440,7 +491,11 @@
         });
 
         row.querySelector('.btn-pop-plus').addEventListener('click', () => {
-          item.qty++;
+          if (item.qty === 0.5) {
+            item.qty = 1;
+          } else {
+            item.qty++;
+          }
           updateCartBar();
           renderModalItems();
         });
@@ -476,9 +531,9 @@
       let totalAmount = 0;
 
       orderCart.forEach((item, index) => {
-        const lineTotal = item.unitPrice * item.qty;
+        const lineTotal = calculateItemCost(item.qty, item.pricing);
         totalAmount += lineTotal;
-        text += `${index + 1}. ${item.name} - ${item.qty} ${t.platesLabel} (₹${lineTotal > 0 ? lineTotal : item.priceStr})\n`;
+        text += `${index + 1}. ${item.name} - ${formatQtyDisplay(item.qty, currentLang)} (₹${lineTotal})\n`;
       });
 
       text += `\n-----------------------\n`;
@@ -508,7 +563,7 @@
 
         allMenuItems.filter(i => i.cat === cat).forEach(item => {
           const isAvail = item.status === 'YES';
-          const unitPrice = extractNumericPrice(item.price);
+          const pricing = parseItemPricing(item.price, item.name);
           let currentQty = 1;
 
           const card = document.createElement('div');
@@ -523,7 +578,7 @@
               <div class="name-bn">${item.name}</div>
               <div class="food-price-row">
                 <span class="food-price">${item.price}</span>
-                <span class="total-price-text item-total-display">${unitPrice > 0 ? `${t.cartTotalLabel} ₹` + unitPrice : ''}</span>
+                <span class="total-price-text item-total-display">${pricing.full > 0 ? `${t.cartTotalLabel} ₹` + pricing.full : ''}</span>
               </div>
               ${isAvail ? `
                 <div class="qty-control-wrap">
@@ -557,22 +612,34 @@
             const btnAdd = card.querySelector('.btn-add');
             const btnOrder = card.querySelector('.btn-order');
 
+            const refreshDisplay = () => {
+              qtyDisplay.innerText = currentQty === 0.5 ? t.halfLabel : currentQty;
+              const cost = calculateItemCost(currentQty, pricing);
+              if (cost > 0) totalDisplay.innerText = `${t.cartTotalLabel} ₹${cost}`;
+            };
+
             btnMinus.addEventListener('click', () => {
               if (currentQty > 1) {
                 currentQty--;
-                qtyDisplay.innerText = currentQty;
-                if (unitPrice > 0) totalDisplay.innerText = `${t.cartTotalLabel} ₹${unitPrice * currentQty}`;
+              } else if (currentQty === 1 && pricing.hasHalf) {
+                // শুধুমাত্র নির্দিষ্ট খাবারগুলোর জন্য ১ থেকে কমে হাফ হবে
+                currentQty = 0.5;
               }
+              // বাকি খাবারে ১-এর নিচে আর কমবে না
+              refreshDisplay();
             });
 
             btnPlus.addEventListener('click', () => {
-              currentQty++;
-              qtyDisplay.innerText = currentQty;
-              if (unitPrice > 0) totalDisplay.innerText = `${t.cartTotalLabel} ₹${unitPrice * currentQty}`;
+              if (currentQty === 0.5) {
+                currentQty = 1;
+              } else {
+                currentQty++;
+              }
+              refreshDisplay();
             });
 
             btnAdd.addEventListener('click', () => {
-              addItemToCart(item.name, item.price, unitPrice, currentQty);
+              addItemToCart(item.name, item.price, pricing, currentQty);
               btnAdd.innerHTML = `<i class="fa-solid fa-check"></i> ${t.addedBtn}`;
               btnAdd.style.background = '#10b981';
               setTimeout(() => {
@@ -582,7 +649,7 @@
             });
 
             btnOrder.addEventListener('click', () => {
-              addItemToCart(item.name, item.price, unitPrice, currentQty);
+              addItemToCart(item.name, item.price, pricing, currentQty);
               openModal();
             });
           }
