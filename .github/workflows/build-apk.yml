@@ -10,13 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Source Code
+      - name: Checkout Code
         uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -27,22 +22,25 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install Capacitor CLI
-        run: |
-          npm init -y
-          npm install @capacitor/core @capacitor/cli @capacitor/android
-          npx cap init "Maha Petuk" "com.mahapetuk.pos" --web-dir .
-          npx cap add android
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-      - name: Build APK with Gradle
+      - name: Create Web Project & Build APK
         run: |
+          mkdir -p www
+          cp -r * www/ 2>/dev/null || true
+          [ -f www/pos.html ] && cp www/pos.html www/index.html
+          npm install -g @capacitor/cli @capacitor/core @capacitor/android
+          npx cap init "Maha Petuk" "com.mahapetuk.pos" --web-dir www
+          npx cap add android
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug
 
-      - name: Upload APK
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: MahaPetuk-App
+          name: MahaPetuk-Billing-App
           path: android/app/build/outputs/apk/debug/app-debug.apk
-          
