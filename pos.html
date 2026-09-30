@@ -6,7 +6,13 @@
 <title>মহা পেটুক - বিল খাতা</title>
 <meta name="theme-color" content="#0E6B57">
 <meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="মহা পেটুক">
+
+<!-- স্বয়ংক্রিয় Web App Manifest (যা ক্রোমকে Install বাটন দেখাতে বাধ্য করে) -->
+<link rel="manifest" id="manifest-placeholder">
+
 <style>
 :root{--bg:#EDF2EE;--ink:#12251F;--muted:#5D6F68;--green:#0E6B57;--green-d:#0A4F41;--gold:#F4B400;--blue:#2B59C3;--card:#fff;--line:#D5DFD9;--red:#B3261E}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -103,6 +109,36 @@ h1{font-size:22px;font-weight:700;color:var(--green-d)}
 <div id="modal"></div>
 
 <script>
+// --- ১. স্বয়ংক্রিয় MANIFEST ও SERVICE WORKER (ক্রোমকে Install বাটন দেখাতে বাধ্য করার জন্য) ---
+const manifestData = {
+  "name": "মহা পেটুক - বিল খাতা",
+  "short_name": "মহা পেটুক",
+  "start_url": window.location.href,
+  "display": "standalone",
+  "background_color": "#EDF2EE",
+  "theme_color": "#0E6B57",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3170/3170733.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+};
+const stringManifest = JSON.stringify(manifestData);
+const blobManifest = new Blob([stringManifest], {type: 'application/json'});
+document.querySelector('#manifest-placeholder').setAttribute('href', URL.createObjectURL(blobManifest));
+
+if ('serviceWorker' in navigator) {
+  const swCode = `
+    self.addEventListener('install', e => self.skipWaiting());
+    self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => new Response('Offline'))));
+  `;
+  const blobSW = new Blob([swCode], {type: 'application/javascript'});
+  navigator.serviceWorker.register(URL.createObjectURL(blobSW)).catch(()=>{});
+}
+
+// --- ২. আপনার মূল অ্যাপ কোড ---
 const $ = s => document.querySelector(s);
 const S = {menu:[],sales:[],view:'sell',edit:false,cart:{},cartOpen:false,filter:'today',pendingDel:null,modal:null,busy:false};
 const COLORS = ['#F6D9A8','#CDE7D6','#F4C9C0','#D3DDF4','#EBD5F0','#F7EBA5'];
@@ -113,7 +149,6 @@ const SEED = [
   {id:'s4',name:'চা',price:10,img:null,emoji:'☕'}
 ];
 
-/* ---------- পার্মানেন্ট লোকাল স্টোরেজ (ইন্টারনেট ছাড়াও ফোনে সেভ থাকবে) ---------- */
 const store = {
   get(k){
     try {
@@ -128,7 +163,6 @@ const store = {
   }
 };
 
-/* ---------- হেল্পার ফাংশন ---------- */
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const bn = n => Number(n).toLocaleString('bn-IN');
 const money = n => '₹' + bn(n);
@@ -139,7 +173,6 @@ const tLabel = ts => new Date(ts).toLocaleTimeString('bn-IN',{hour:'numeric',min
 const toEn = s => String(s).replace(/[০-৯]/g, d => '০১২৩৪৫৬৭৮৯'.indexOf(d));
 const cartLines = () => Object.entries(S.cart).map(([id,q]) => { const m = S.menu.find(x => x.id===id); return m ? {id,name:m.name,price:m.price,qty:q} : null; }).filter(Boolean);
 
-/* ---------- স্ক্রিন ভিউ ---------- */
 function headView(){
   return `<div class="top"><h1>মহা পেটুক - বিল খাতা</h1>
     ${S.view==='sell' ? `<button class="editbtn ${S.edit?'on':''}" data-act="toggleEdit">${S.edit?'✓ শেষ':'মেনু ঠিক করুন'}</button>` : ''}
@@ -158,7 +191,7 @@ function cardView(m,i){
   if(S.edit){
     return `<div class="card">${body}<div class="cardtools"><button data-act="editItem" data-id="${m.id}">সম্পাদনা</button></div></div>`;
   }
-  return `<button class="card ${q?'sel':''}" data-act="add" data-id="${m.id}" aria-label="${esc(m.name)} ${money(m.price)}">${q?`<span class="badge">${bn(q)}</span>`:''}${body}</button>`;
+  return `<button class="card ${q?'sel':''}" data-act="add" data-id="${m.id}">${q?`<span class="badge">${bn(q)}</span>`:''}${body}</button>`;
 }
 
 function sellView(){
@@ -228,7 +261,6 @@ function render(){
   if(showBar) $('#barin').innerHTML = barView();
 }
 
-/* ---------- ছবি ও মডাল ---------- */
 function openModal(id){
   const m = id ? S.menu.find(x => x.id===id) : null;
   S.modal = {id:id||null, img: m ? m.img : null, emoji: m ? m.emoji : '🍽️', confirmDel:false};
@@ -273,7 +305,6 @@ document.addEventListener('change', async e => {
   }catch(err){ $('#err').textContent = 'ছবি লোড হয়নি, আবার চেষ্টা করুন।'; }
 });
 
-/* ---------- বাটন অ্যাকশন ---------- */
 let toastT;
 function toast(msg){
   const t = $('#toast'); t.textContent = msg; t.classList.add('show');
@@ -347,23 +378,4 @@ document.addEventListener('click', e => {
     case 'pay': pay(el.dataset.m); break;
     case 'filter': S.filter = el.dataset.k; S.pendingDel = null; render(); break;
     case 'newItem': openModal(null); break;
-    case 'editItem': openModal(id); break;
-    case 'closeModal': closeModal(); break;
-    case 'saveItem': saveItem(); break;
-    case 'delItem': delItem(); break;
-    case 'delSale': delSale(id); break;
-  }
-});
-
-/* ---------- অ্যাপ চালু হওয়া ---------- */
-(function init(){
-  const menu = store.get('menu');
-  const sales = store.get('sales');
-  S.menu = menu || SEED;
-  S.sales = sales || [];
-  if(!menu) store.set('menu', S.menu);
-  render();
-})();
-</script>
-</body>
-</html>
+    case 'editItem': openModal(id
